@@ -47,7 +47,7 @@ class _SplashState extends State<Splash> {
             title: Text("用户协议和隐私政策",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold),),
             content: RichText(
               text: TextSpan(
-                text: "请你务必仔细审阅，充分理解“用户协议”和“隐私政策”各个条款，包括不限于：为了向你提供内容分享、后台播放等服务，我们需要收集你的设备信息、地区信息等个人信息。你可以在“设置”中关于数字藏品中再次查看或更改用户协议、隐私政策。你可阅读",
+                text: "请你务必仔细审阅，充分理解“用户协议”和“隐私政策”各个条款，包括不限于：为了向你提供内容分享、后台播放等服务，我们需要收集你的设备信息、地区信息等个人信息。你可以在“设置”中关于玄梦阁数藏中再次查看或更改用户协议、隐私政策。你可阅读",
                 style: TextStyle(
                     color: ColorsUtil
                         .hexColor(
@@ -186,13 +186,12 @@ class _SplashState extends State<Splash> {
                 );
               case ConnectionState.done:
                 return Container(
-                  color: Colors.blue,
-                  // child: Image.asset(
-                  //   "assets/splash.png",
-                  //   fit: BoxFit.fill,
-                  //   width: 1.sw,
-                  //   height: 1.sh,
-                  // ),
+                  child: Image.asset(
+                    "assets/splash.png",
+                    fit: BoxFit.fill,
+                    width: 1.sw,
+                    height: 1.sh,
+                  ),
                 );
             }
           },

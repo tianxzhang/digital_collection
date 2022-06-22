@@ -73,7 +73,7 @@ class MyAppState extends State<MyApp> {
         ],
         // locale: const Locale("en", "US"),
         debugShowCheckedModeBanner: false,
-        title: "数字收藏",
+        title: "玄梦阁数藏",
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
