@@ -1,14 +1,20 @@
+import 'dart:convert';
 import 'dart:ui';
 
+import 'package:digital_collection/base/base_tab.dart';
 import 'package:digital_collection/base/config_util.dart';
 import 'package:digital_collection/base/webview_page.dart';
 import 'package:digital_collection/login_register/register_page.dart';
 import 'package:digital_collection/util/color_util.dart';
 import 'package:digital_collection/util/common_util.dart';
+import 'package:digital_collection/util/network_util.dart';
 import 'package:digital_collection/util/route_util.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_aliyun_captcha/flutter_aliyun_captcha.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
 
 import 'forget_password_page.dart';
 
@@ -28,13 +34,15 @@ class LoginPageState extends State<LoginPage>
   var shoujihao = new TextEditingController();
   var yazhengma = new TextEditingController();
   bool passwordVisible = false;
-  bool xieyi = true;
+  bool xieyi = false;
+  AliyunCaptchaController _captchaController = AliyunCaptchaController();
 
   @override
   bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
+    ToastContext().init(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
@@ -114,7 +122,11 @@ class LoginPageState extends State<LoginPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 18.w, right: 19.w,top: 18.h,),
+                      margin: EdgeInsets.only(
+                        left: 18.w,
+                        right: 19.w,
+                        top: 18.h,
+                      ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -122,7 +134,7 @@ class LoginPageState extends State<LoginPage>
                             child: Icon(Icons.person),
                           ),
                           Container(
-                            margin: EdgeInsets.only(bottom: 6.h),
+                            margin: EdgeInsets.only(bottom: 0.h),
                             child: Text("账号",
                                 style: TextStyle(
                                     fontSize: 8.5.sp,
@@ -142,7 +154,7 @@ class LoginPageState extends State<LoginPage>
                             // height: 16.h,
                             decoration: new BoxDecoration(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(10.w)),
+                                    BorderRadius.all(Radius.circular(10.w)),
                                 border: Border.all(
                                   color: ColorsUtil.hexColor(0xF2F2F2),
                                   width: 1.w,
@@ -151,151 +163,17 @@ class LoginPageState extends State<LoginPage>
                                 color: ColorsUtil.hexColor(0xF2F2F2)),
                             child: Center(
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Container(
-                                      // margin: EdgeInsets.only(left: 5.w, top: 5.h),
-                                        height: 16.h,
-                                        width: 72.w,
-                                        child: TextField(
-                                          // controller: khxm,
-                                          cursorColor:
-                                          ColorsUtil.hexColor(0x9F9F9F),
-                                          //设置光标
-                                          decoration: InputDecoration(
-//                        contentPadding: const EdgeInsets.symmetric(vertical: 9.8),
-                                              border: InputBorder.none,
-                                              hintText: "请输入手机号",
-                                              hintStyle: new TextStyle(
-                                                  fontSize: 6.sp,
-                                                  fontWeight: FontWeight.normal,
-                                                  color: ColorsUtil.hexColor(
-                                                      0x9F9F9F))),
-                                          maxLines: 1,
-                                          // maxLength: 10,
-                                          //最大行数
-                                          autofocus: false,
-                                          //是否自动对焦
-                                          obscureText: false,
-                                          enabled: true,
-                                          //是否是密码
-//                  textAlign: TextAlign.center,//文本对齐方式
-                                          style: TextStyle(
-                                              fontSize: 6.sp,
-                                              fontWeight: FontWeight.normal,
-                                              color: ColorsUtil.hexColor(0x2F2F2F)),
-                                          //输入文本的样式
-                                          onChanged: (text) {
-                                            print('change $text' +
-                                                text.length.toString());
-                                          },
-                                          onSubmitted: (text) {
-                                            print('submit $text');
-                                            FocusScope.of(context)
-                                                .requestFocus(FocusNode());
-                                          },
-                                        ))
-                                  ],
-                                )),
-                          ),
-                        ),
-                                              ],
-                    ),
-
-                  ],
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 18.w, right: 19.w),
-                  height: 23.h,
-                  decoration: new BoxDecoration(
-                      color: Colors.white,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            child: Icon(Icons.lock),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 5.h, bottom: 6.5.h),
-                            child: Row(
-                              children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Text("密    码",
-                                                style: TextStyle(
-                                                    fontSize: 8.5.sp,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: ColorsUtil.hexColor(
-                                                        0x333333))),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      Container(
-                          margin: EdgeInsets.only(bottom: 10.h),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context, RouteUtil.createRoute(ForgetPasswordPage()));
-                            },
-                            child: Text("忘记密码？",
-                                style: TextStyle(
-                                    fontSize: 8.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: ColorsUtil.hexColor(0xFD3D46))),
-                          )),
-
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            left: 8.w, right: 8.w, top: 5.h, bottom: 7.5.h),
-                        // width: 100.w,
-                        // height: 16.h,
-                        decoration: new BoxDecoration(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(10.w)),
-                            border: Border.all(
-                              color: ColorsUtil.hexColor(0xF2F2F2),
-                              width: 1.w,
-                              style: BorderStyle.solid,
-                            ),
-                            color: ColorsUtil.hexColor(0xF2F2F2)),
-                        child: Center(
-                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 Container(
-                                  // margin: EdgeInsets.only(left: 5.w, top: 5.h),
+                                    // margin: EdgeInsets.only(left: 5.w, top: 5.h),
                                     height: 16.h,
                                     width: 72.w,
                                     child: TextField(
-                                      // controller: khxm,
+                                      controller: shoujihao,
                                       cursorColor:
-                                      ColorsUtil.hexColor(0x9F9F9F),
+                                          ColorsUtil.hexColor(0x9F9F9F),
                                       //设置光标
                                       decoration: InputDecoration(
 //                        contentPadding: const EdgeInsets.symmetric(vertical: 9.8),
@@ -329,27 +207,140 @@ class LoginPageState extends State<LoginPage>
                                         FocusScope.of(context)
                                             .requestFocus(FocusNode());
                                       },
-                                    )),
-                                GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        passwordVisible = !passwordVisible;
-                                      });
-                                    },
-                                    child: Container(
-                                      margin: EdgeInsets.only(bottom: 6.h),
-                                      child: Image.asset(
-                                        "assets/login_passeye.png",
-                                        width: 9.w,
-                                        height: 6.59.h,
-                                        fit: BoxFit.fill,
-                                        color: !passwordVisible
-                                            ? Colors.grey
-                                            : ColorsUtil.hexColor(0xFD4049),
-                                      ),
-                                    )),
+                                    ))
                               ],
                             )),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 18.w, right: 19.w),
+                  height: 23.h,
+                  decoration: new BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            child: Icon(Icons.lock),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 0.h, bottom: 0.h),
+                            child: Text("密码",
+                                style: TextStyle(
+                                    fontSize: 8.5.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: ColorsUtil.hexColor(0x333333))),
+                          ),
+                        ],
+                      ),
+                      Container(
+                          margin: EdgeInsets.only(bottom: 0.h),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                                  RouteUtil.createRoute(ForgetPasswordPage()));
+                            },
+                            child: Text("忘记密码？",
+                                style: TextStyle(
+                                    fontSize: 8.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black)),
+                          )),
+                    ],
+                  ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: 8.w, right: 8.w, top: 5.h, bottom: 7.5.h),
+                        // width: 100.w,
+                        // height: 16.h,
+                        decoration: new BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.w)),
+                            border: Border.all(
+                              color: ColorsUtil.hexColor(0xF2F2F2),
+                              width: 1.w,
+                              style: BorderStyle.solid,
+                            ),
+                            color: ColorsUtil.hexColor(0xF2F2F2)),
+                        child: Center(
+                            child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                                // margin: EdgeInsets.only(left: 5.w, top: 5.h),
+                                height: 16.h,
+                                width: 72.w,
+                                child: TextField(
+                                  controller: yazhengma,
+                                  cursorColor: ColorsUtil.hexColor(0x9F9F9F),
+                                  //设置光标
+                                  decoration: InputDecoration(
+//                        contentPadding: const EdgeInsets.symmetric(vertical: 9.8),
+                                      border: InputBorder.none,
+                                      hintText: "请输入密码",
+                                      hintStyle: new TextStyle(
+                                          fontSize: 6.sp,
+                                          fontWeight: FontWeight.normal,
+                                          color:
+                                              ColorsUtil.hexColor(0x9F9F9F))),
+                                  maxLines: 1,
+                                  // maxLength: 10,
+                                  //最大行数
+                                  autofocus: false,
+                                  //是否自动对焦
+                                  obscureText: false,
+                                  enabled: true,
+                                  //是否是密码
+//                  textAlign: TextAlign.center,//文本对齐方式
+                                  style: TextStyle(
+                                      fontSize: 6.sp,
+                                      fontWeight: FontWeight.normal,
+                                      color: ColorsUtil.hexColor(0x2F2F2F)),
+                                  //输入文本的样式
+                                  onChanged: (text) {
+                                    print('change $text' +
+                                        text.length.toString());
+                                  },
+                                  onSubmitted: (text) {
+                                    print('submit $text');
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                  },
+                                )),
+                            GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    passwordVisible = !passwordVisible;
+                                  });
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(bottom: 6.h),
+                                  child: Image.asset(
+                                    "assets/login_passeye.png",
+                                    width: 9.w,
+                                    height: 6.59.h,
+                                    fit: BoxFit.fill,
+                                    color: !passwordVisible
+                                        ? Colors.grey
+                                        : ColorsUtil.hexColor(0xFD4049),
+                                  ),
+                                )),
+                          ],
+                        )),
                       ),
                     ),
                   ],
@@ -373,7 +364,6 @@ class LoginPageState extends State<LoginPage>
                                   color: ColorsUtil.hexColor(0xFD3D46))),
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -389,92 +379,97 @@ class LoginPageState extends State<LoginPage>
                   height: ScreenUtil().setHeight(19),
                   child: MaterialButton(
                     onPressed: () async {
-                      // if (!xieyi) {
-                      //   Fluttertoast.showToast(
-                      //       msg: "请勾选协议",
-                      //       toastLength: Toast.LENGTH_SHORT,
-                      //       gravity: ToastGravity.CENTER,
-                      //       timeInSecForIosWeb: 1,
-                      //       backgroundColor: Colors.black,
-                      //       textColor: Colors.white,
-                      //       fontSize: 6.5.sp);
-                      //   return;
-                      // }
-                      // var phone = CommonUtil.noBlank(shoujihao.text.toString());
-                      // if (phone == null || phone.length == 0) {
-                      //   Fluttertoast.showToast(
-                      //       msg: "请输入手机号",
-                      //       toastLength: Toast.LENGTH_SHORT,
-                      //       gravity: ToastGravity.CENTER,
-                      //       timeInSecForIosWeb: 1,
-                      //       backgroundColor: Colors.black,
-                      //       textColor: Colors.white,
-                      //       fontSize: 6.5.sp);
-                      //   return;
-                      // }
-                      // if (!CommonUtil.isChinaPhoneLegal(phone)) {
-                      //   Fluttertoast.showToast(
-                      //       msg: "手机号输入有误",
-                      //       toastLength: Toast.LENGTH_SHORT,
-                      //       gravity: ToastGravity.CENTER,
-                      //       timeInSecForIosWeb: 1,
-                      //       backgroundColor: Colors.black,
-                      //       textColor: Colors.white,
-                      //       fontSize: 6.5.sp);
-                      //   return;
-                      // }
-                      // if (yazhengma.text.toString() == null ||
-                      //     yazhengma.text.length < 6) {
-                      //   Fluttertoast.showToast(
-                      //       msg: "请输入密码",
-                      //       toastLength: Toast.LENGTH_SHORT,
-                      //       gravity: ToastGravity.CENTER,
-                      //       timeInSecForIosWeb: 1,
-                      //       backgroundColor: Colors.black,
-                      //       textColor: Colors.white,
-                      //       fontSize: 6.5.sp);
-                      //   return;
-                      // }
-                      // Map<String, dynamic> postMap = new Map<String, dynamic>();
-                      // postMap['phone'] =
-                      //     CommonUtil.noBlank(shoujihao.text.toString());
-                      // postMap['pass'] = CommonUtil.generateMd5(yazhengma.text);
-                      // postMap['login_type'] = 3;
-                      //
-                      // var result =
-                      // await NetWorkUtil.postHttp("appApi/login", postMap);
-                      // Map resultMap = json.decode(result.toString());
-                      // if (resultMap["code"] == 200) {
-                      //   SharedPreferences prefs = await SharedPreferences.getInstance();
-                      //   await prefs.setString("token", resultMap["data"]["token"]);
-                      //   await prefs.setString("phone", CommonUtil.noBlank(shoujihao.text.toString()));
-                      //   if (resultMap["data"]["new"] == true) {
-                      //     Navigator.pushAndRemoveUntil(
-                      //         context,
-                      //         RouteUtil.createRoute(IdentityPage()),
-                      //             (check) => false);
-                      //   } else {
-                      //     Navigator.pushAndRemoveUntil(
-                      //         context,
-                      //         RouteUtil.createRoute(BaseTabBar(
-                      //             (resultMap["data"]["identity"] == 1 ||
-                      //                 resultMap["data"]["identity"] == 2)
-                      //                 ? true
-                      //                 : true)),
-                      //             (check) => false);
-                      //   }
-                      //   return;
-                      // } else {
-                      //   Fluttertoast.showToast(
-                      //       msg: resultMap["msg"].toString(),
-                      //       toastLength: Toast.LENGTH_SHORT,
-                      //       gravity: ToastGravity.CENTER,
-                      //       timeInSecForIosWeb: 1,
-                      //       backgroundColor: Colors.black,
-                      //       textColor: Colors.white,
-                      //       fontSize: 6.5.sp);
-                      //   return;
-                      // }
+                      if (!xieyi) {
+                        Toast.show("请勾选协议");
+                        return;
+                      }
+                      var phone = CommonUtil.noBlank(shoujihao.text.toString());
+                      if (phone == null || phone.length == 0) {
+                        Toast.show("请输入手机号");
+                        return;
+                      }
+                      if (!CommonUtil.isChinaPhoneLegal(phone)) {
+                        Toast.show("手机号输入有误");
+                        return;
+                      }
+                      if (yazhengma.text.toString() == null ||
+                          yazhengma.text.length < 8) {
+                        Toast.show("密码输入不正确");
+                        return;
+                      }
+
+                      showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: Container(
+                                    width: double.infinity,
+                                    height: 20.h,
+                                    child: AliyunCaptchaButton(
+                                      controller: _captchaController,
+                                      type: AliyunCaptchaType.slide,
+                                      option: AliyunCaptchaOption(
+                                        appKey: 'FFFF0N0000000000A9AB',
+                                        scene: 'nc_login_h5',
+                                        language: 'cn',
+                                      ),
+                                      customStyle: '''
+                                                        .nc_scale {
+                                                          background: #eeeeee !important;
+                                                          /* 默认背景色 */
+                                                        }
+                                                      ''',
+                                      onSuccess: (dynamic data) async {
+                                        Navigator.of(context).pop();
+                                        Map<String, dynamic> postMap =
+                                            new Map<String, dynamic>();
+                                        postMap['phone'] = phone;
+                                        postMap['password'] =
+                                            CommonUtil.noBlank(
+                                                yazhengma.text.toString());
+                                        postMap['scene'] = 'nknnk';
+                                        postMap['sessionId'] =
+                                            data['sessionId'];
+                                        postMap['sig'] = data['sig'];
+                                        postMap['token'] = data['token'];
+
+                                        var result = await NetWorkUtil.postHttp(
+                                            "/u/login", postMap);
+                                        Map resultMap =
+                                            json.decode(result.toString());
+                                        if (resultMap["code"] == 1) {
+                                          SharedPreferences prefs =
+                                              await SharedPreferences
+                                                  .getInstance();
+                                          await prefs.setString("token",
+                                              resultMap["data"]["token"]);
+                                          await prefs.setString(
+                                              "phone",
+                                              CommonUtil.noBlank(
+                                                  shoujihao.text.toString()));
+
+                                          Navigator.pushAndRemoveUntil(
+                                              this.context,
+                                              RouteUtil.createRoute(
+                                                  BaseTabBar()),
+                                              (check) => false);
+
+                                          return;
+                                        } else {
+                                          Toast.show(
+                                              resultMap["message"].toString());
+                                          return;
+                                        }
+                                      },
+                                      onFailure: (String failCode) {},
+                                      onError: (String errorCode) {},
+                                    ),
+                                  ),
+                                );
+                              },
+                              barrierDismissible: true)
+                          .then((value) {});
+                      return;
                     },
                     child: Container(
                         width: 30.w,
@@ -514,17 +509,17 @@ class LoginPageState extends State<LoginPage>
                           height: 6.5.h,
                           child: !xieyi
                               ? Image.asset(
-                            "assets/login_xieyi.png",
-                            // width: 24.w,
-                            // height: 24.w,
-                            fit: BoxFit.fill,
-                          )
+                                  "assets/login_xieyi.png",
+                                  // width: 24.w,
+                                  // height: 24.w,
+                                  fit: BoxFit.fill,
+                                )
                               : Image.asset(
-                            "assets/login_xieyi_ok.png",
-                            // width: 24.w,
-                            // height: 24.w,
-                            fit: BoxFit.fill,
-                          ),
+                                  "assets/login_xieyi_ok.png",
+                                  // width: 24.w,
+                                  // height: 24.w,
+                                  fit: BoxFit.fill,
+                                ),
                         ),
                         onTap: () {
                           setState(() {
@@ -554,10 +549,11 @@ class LoginPageState extends State<LoginPage>
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => WebViewPage(
-                                                urlPath:
-                                                ConfigUtil.baseUrl+"appApi/about",
-                                                title: "用户协议",
-                                              )));
+                                                    urlPath:
+                                                        ConfigUtil.baseUrl +
+                                                            "appApi/about",
+                                                    title: "用户协议",
+                                                  )));
                                     }),
                               TextSpan(
                                 text: '和',
@@ -576,7 +572,8 @@ class LoginPageState extends State<LoginPage>
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => WebViewPage(
-                                                  urlPath:ConfigUtil.baseUrl+"appApi/privacy",
+                                                  urlPath: ConfigUtil.baseUrl +
+                                                      "appApi/privacy",
                                                   title: "隐私政策")));
                                     }),
                             ],

@@ -1,11 +1,16 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'package:digital_collection/base/consume_widget.dart';
 import 'package:digital_collection/base/countdown_time_model.dart';
+import 'package:digital_collection/login_register/login_page.dart';
 import 'package:digital_collection/util/color_util.dart';
 import 'package:digital_collection/util/common_util.dart';
+import 'package:digital_collection/util/network_util.dart';
+import 'package:digital_collection/util/route_util.dart';
 import 'package:flutter_aliyun_captcha/flutter_aliyun_captcha.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
 class ForgetPasswordPage extends StatefulWidget {
@@ -20,6 +25,7 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
   var shoujihao = new TextEditingController();
   var yazhengma = new TextEditingController();
   var mima = new TextEditingController();
+  var remima = new TextEditingController();
   bool passwordVisible = false;
   AliyunCaptchaController _captchaController = AliyunCaptchaController();
 
@@ -110,7 +116,7 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                           child: Icon(Icons.person),
                         ),
                         Container(
-                          margin: EdgeInsets.only(bottom: 6.h),
+                          margin: EdgeInsets.only(bottom: 0.h),
                           child: Text("账号",
                               style: TextStyle(
                                   fontSize: 8.5.sp,
@@ -130,7 +136,7 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                           // height: 16.h,
                           decoration: new BoxDecoration(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(10.w)),
+                                  BorderRadius.all(Radius.circular(10.w)),
                               border: Border.all(
                                 color: ColorsUtil.hexColor(0xF2F2F2),
                                 width: 1.w,
@@ -139,52 +145,52 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                               color: ColorsUtil.hexColor(0xF2F2F2)),
                           child: Center(
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Container(
-                                    // margin: EdgeInsets.only(left: 5.w, top: 5.h),
-                                      height: 16.h,
-                                      width: 72.w,
-                                      child: TextField(
-                                        // controller: khxm,
-                                        cursorColor: ColorsUtil.hexColor(0x9F9F9F),
-                                        //设置光标
-                                        decoration: InputDecoration(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                  // margin: EdgeInsets.only(left: 5.w, top: 5.h),
+                                  height: 16.h,
+                                  width: 72.w,
+                                  child: TextField(
+                                    controller: shoujihao,
+                                    cursorColor: ColorsUtil.hexColor(0x9F9F9F),
+                                    //设置光标
+                                    decoration: InputDecoration(
 //                        contentPadding: const EdgeInsets.symmetric(vertical: 9.8),
-                                            border: InputBorder.none,
-                                            hintText: "请输入手机号",
-                                            hintStyle: new TextStyle(
-                                                fontSize: 6.sp,
-                                                fontWeight: FontWeight.normal,
-                                                color:
-                                                ColorsUtil.hexColor(0x9F9F9F))),
-                                        maxLines: 1,
-                                        // maxLength: 10,
-                                        //最大行数
-                                        autofocus: false,
-                                        //是否自动对焦
-                                        obscureText: false,
-                                        enabled: true,
-                                        //是否是密码
-//                  textAlign: TextAlign.center,//文本对齐方式
-                                        style: TextStyle(
+                                        border: InputBorder.none,
+                                        hintText: "请输入手机号",
+                                        hintStyle: new TextStyle(
                                             fontSize: 6.sp,
                                             fontWeight: FontWeight.normal,
-                                            color: ColorsUtil.hexColor(0x2F2F2F)),
-                                        //输入文本的样式
-                                        onChanged: (text) {
-                                          print('change $text' +
-                                              text.length.toString());
-                                        },
-                                        onSubmitted: (text) {
-                                          print('submit $text');
-                                          FocusScope.of(context)
-                                              .requestFocus(FocusNode());
-                                        },
-                                      ))
-                                ],
-                              )),
+                                            color:
+                                                ColorsUtil.hexColor(0x9F9F9F))),
+                                    maxLines: 1,
+                                    // maxLength: 10,
+                                    //最大行数
+                                    autofocus: false,
+                                    //是否自动对焦
+                                    obscureText: false,
+                                    enabled: true,
+                                    //是否是密码
+//                  textAlign: TextAlign.center,//文本对齐方式
+                                    style: TextStyle(
+                                        fontSize: 6.sp,
+                                        fontWeight: FontWeight.normal,
+                                        color: ColorsUtil.hexColor(0x2F2F2F)),
+                                    //输入文本的样式
+                                    onChanged: (text) {
+                                      print('change $text' +
+                                          text.length.toString());
+                                    },
+                                    onSubmitted: (text) {
+                                      print('submit $text');
+                                      FocusScope.of(context)
+                                          .requestFocus(FocusNode());
+                                    },
+                                  ))
+                            ],
+                          )),
                         ),
                       ),
                     ],
@@ -199,7 +205,6 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                     margin: EdgeInsets.only(
                       left: 18.w,
                       right: 19.w,
-                      top: 18.h,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -208,7 +213,7 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                           child: Icon(Icons.cloud),
                         ),
                         Container(
-                          margin: EdgeInsets.only(bottom: 6.h),
+                          margin: EdgeInsets.only(bottom: 0.h),
                           child: Text("验证码",
                               style: TextStyle(
                                   fontSize: 8.5.sp,
@@ -228,7 +233,7 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                           // height: 16.h,
                           decoration: new BoxDecoration(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(10.w)),
+                                  BorderRadius.all(Radius.circular(10.w)),
                               border: Border.all(
                                 color: ColorsUtil.hexColor(0xF2F2F2),
                                 width: 1.w,
@@ -237,52 +242,52 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                               color: ColorsUtil.hexColor(0xF2F2F2)),
                           child: Center(
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Container(
-                                    // margin: EdgeInsets.only(left: 5.w, top: 5.h),
-                                      height: 16.h,
-                                      width: 72.w,
-                                      child: TextField(
-                                        // controller: khxm,
-                                        cursorColor: ColorsUtil.hexColor(0x9F9F9F),
-                                        //设置光标
-                                        decoration: InputDecoration(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                  // margin: EdgeInsets.only(left: 5.w, top: 5.h),
+                                  height: 16.h,
+                                  width: 72.w,
+                                  child: TextField(
+                                    controller: yazhengma,
+                                    cursorColor: ColorsUtil.hexColor(0x9F9F9F),
+                                    //设置光标
+                                    decoration: InputDecoration(
 //                        contentPadding: const EdgeInsets.symmetric(vertical: 9.8),
-                                            border: InputBorder.none,
-                                            hintText: "请输入手机号",
-                                            hintStyle: new TextStyle(
-                                                fontSize: 6.sp,
-                                                fontWeight: FontWeight.normal,
-                                                color:
-                                                ColorsUtil.hexColor(0x9F9F9F))),
-                                        maxLines: 1,
-                                        // maxLength: 10,
-                                        //最大行数
-                                        autofocus: false,
-                                        //是否自动对焦
-                                        obscureText: false,
-                                        enabled: true,
-                                        //是否是密码
-//                  textAlign: TextAlign.center,//文本对齐方式
-                                        style: TextStyle(
+                                        border: InputBorder.none,
+                                        hintText: "请输入验证码",
+                                        hintStyle: new TextStyle(
                                             fontSize: 6.sp,
                                             fontWeight: FontWeight.normal,
-                                            color: ColorsUtil.hexColor(0x2F2F2F)),
-                                        //输入文本的样式
-                                        onChanged: (text) {
-                                          print('change $text' +
-                                              text.length.toString());
-                                        },
-                                        onSubmitted: (text) {
-                                          print('submit $text');
-                                          FocusScope.of(context)
-                                              .requestFocus(FocusNode());
-                                        },
-                                      ))
-                                ],
-                              )),
+                                            color:
+                                                ColorsUtil.hexColor(0x9F9F9F))),
+                                    maxLines: 1,
+                                    // maxLength: 10,
+                                    //最大行数
+                                    autofocus: false,
+                                    //是否自动对焦
+                                    obscureText: false,
+                                    enabled: true,
+                                    //是否是密码
+//                  textAlign: TextAlign.center,//文本对齐方式
+                                    style: TextStyle(
+                                        fontSize: 6.sp,
+                                        fontWeight: FontWeight.normal,
+                                        color: ColorsUtil.hexColor(0x2F2F2F)),
+                                    //输入文本的样式
+                                    onChanged: (text) {
+                                      print('change $text' +
+                                          text.length.toString());
+                                    },
+                                    onSubmitted: (text) {
+                                      print('submit $text');
+                                      FocusScope.of(context)
+                                          .requestFocus(FocusNode());
+                                    },
+                                  ))
+                            ],
+                          )),
                         ),
                       ),
                       GestureDetector(
@@ -294,60 +299,80 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                           builder: (context, model, _) => InkWell(
                               onTap: model.isFinish
                                   ? () async {
-                                var phone = CommonUtil.noBlank(
-                                    shoujihao.text.toString());
-                                // print("phone=="+phone);
-                                // if (!CommonUtil.isChinaPhoneLegal(phone)) {
-                                //   Toast.show("手机号输入有误");
-                                //   return;
-                                // }
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        content: Container(
-                                          width: double.infinity,
-                                          height: 20.h,
-                                          child: AliyunCaptchaButton(
-                                            controller: _captchaController,
-                                            type: AliyunCaptchaType.slide,
-                                            option: AliyunCaptchaOption(
-                                              appKey: 'FFFF0N0000000000A9AB',
-                                              scene: 'nc_message_h5',
-                                              language: 'cn',
-                                            ),
-                                            customStyle: '''
-                                              .nc_scale {
-                                                background: #eeeeee !important;
-                                                /* 默认背景色 */
-                                              }
-                                            ''',
-                                            onSuccess: (dynamic data) {
-                                              Navigator.of(context).pop();
-                                            },
-                                            onFailure: (String failCode) {
+                                      var phone = CommonUtil.noBlank(
+                                          shoujihao.text.toString());
+                                      print("phone==" + phone);
+                                      if (!CommonUtil.isChinaPhoneLegal(
+                                          phone)) {
+                                        Toast.show("手机号输入有误");
+                                        return;
+                                      }
+                                      showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  content: Container(
+                                                    width: double.infinity,
+                                                    height: 20.h,
+                                                    child: AliyunCaptchaButton(
+                                                      controller:
+                                                          _captchaController,
+                                                      type: AliyunCaptchaType
+                                                          .slide,
+                                                      option:
+                                                          AliyunCaptchaOption(
+                                                        appKey:
+                                                            'FFFF0N0000000000A9AB',
+                                                        scene: 'nc_message_h5',
+                                                        language: 'cn',
+                                                      ),
+                                                      customStyle: '''
+                                                        .nc_scale {
+                                                          background: #eeeeee !important;
+                                                          /* 默认背景色 */
+                                                        }
+                                                      ''',
+                                                      onSuccess:
+                                                          (dynamic data) async {
+                                                            model.startCountDown();
+                                                            Map<String, String>
+                                                            postMap = new Map<
+                                                                String,
+                                                                String>();
+                                                            postMap['phone'] =
+                                                                phone;
+                                                            postMap['scene'] =
+                                                            '111';
+                                                            postMap['sessionId'] =
+                                                            data['sessionId'];
+                                                            postMap['sig'] =
+                                                            data['sig'];
+                                                            postMap['token'] =
+                                                            data['token'];
+                                                            Navigator.of(context)
+                                                                .pop();
+                                                            var result =
+                                                                await NetWorkUtil
+                                                                .getHttpQuery(
+                                                                "/u/forgetPWCode",
+                                                                postMap);
+                                                            Map resultMap =
+                                                            json.decode(result
+                                                                .toString());
 
-                                            },
-                                            onError: (String errorCode) {
-
-                                            },
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    barrierDismissible: true)
-                                    .then((value) {});
-                                return;
-                                model.startCountDown();
-                                Map<String, dynamic> postMap =
-                                new Map<String, dynamic>();
-                                postMap['phone'] = phone;
-                                postMap['type'] = 3;
-                                // var result = await NetWorkUtil.postHttp(
-                                //     "appApi/sendCode", postMap);
-                                // Map resultMap =
-                                // json.decode(result.toString());
-                              }
+                                                      },
+                                                      onFailure:
+                                                          (String failCode) {},
+                                                      onError:
+                                                          (String errorCode) {},
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              barrierDismissible: true)
+                                          .then((value) {});
+                                      return;
+                                    }
                                   : null,
                               child: Container(
                                 margin: EdgeInsets.only(bottom: 6.h),
@@ -355,9 +380,9 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                                   model.isNotClicked
                                       ? '获取验证码' //未点击过的初始状态
                                       : model.isFinish
-                                      ? '重新获取' //倒计时结束
-                                      : model.currentTime.toString() +
-                                      "秒后重发",
+                                          ? '重新获取' //倒计时结束
+                                          : model.currentTime.toString() +
+                                              "秒后重发",
                                   //过程中
                                   style: TextStyle(
                                       color: ColorsUtil.hexColor(0xFD3C45),
@@ -386,28 +411,11 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 5.h, bottom: 6.5.h),
-                          child: Row(
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Row(
-                                        children: <Widget>[
-                                          Text("设置密码",
-                                              style: TextStyle(
-                                                  fontSize: 8.5.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: ColorsUtil.hexColor(
-                                                      0x333333))),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                          child: Text("设置密码",
+                              style: TextStyle(
+                                  fontSize: 8.5.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorsUtil.hexColor(0x333333))),
                         ),
                       ],
                     ),
@@ -432,69 +440,69 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                           color: ColorsUtil.hexColor(0xF2F2F2)),
                       child: Center(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                // margin: EdgeInsets.only(left: 5.w, top: 5.h),
-                                  height: 16.h,
-                                  width: 72.w,
-                                  child: TextField(
-                                    // controller: khxm,
-                                    cursorColor: ColorsUtil.hexColor(0x9F9F9F),
-                                    //设置光标
-                                    decoration: InputDecoration(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                              // margin: EdgeInsets.only(left: 5.w, top: 5.h),
+                              height: 16.h,
+                              width: 72.w,
+                              child: TextField(
+                                controller: mima,
+                                cursorColor: ColorsUtil.hexColor(0x9F9F9F),
+                                //设置光标
+                                decoration: InputDecoration(
 //                        contentPadding: const EdgeInsets.symmetric(vertical: 9.8),
-                                        border: InputBorder.none,
-                                        hintText: "请输入手机号",
-                                        hintStyle: new TextStyle(
-                                            fontSize: 6.sp,
-                                            fontWeight: FontWeight.normal,
-                                            color: ColorsUtil.hexColor(0x9F9F9F))),
-                                    maxLines: 1,
-                                    // maxLength: 10,
-                                    //最大行数
-                                    autofocus: false,
-                                    //是否自动对焦
-                                    obscureText: false,
-                                    enabled: true,
-                                    //是否是密码
-//                  textAlign: TextAlign.center,//文本对齐方式
-                                    style: TextStyle(
+                                    border: InputBorder.none,
+                                    hintText: "请输入密码",
+                                    hintStyle: new TextStyle(
                                         fontSize: 6.sp,
                                         fontWeight: FontWeight.normal,
-                                        color: ColorsUtil.hexColor(0x2F2F2F)),
-                                    //输入文本的样式
-                                    onChanged: (text) {
-                                      print(
-                                          'change $text' + text.length.toString());
-                                    },
-                                    onSubmitted: (text) {
-                                      print('submit $text');
-                                      FocusScope.of(context)
-                                          .requestFocus(FocusNode());
-                                    },
-                                  )),
-                              GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      passwordVisible = !passwordVisible;
-                                    });
-                                  },
-                                  child: Container(
-                                    margin: EdgeInsets.only(bottom: 6.h),
-                                    child: Image.asset(
-                                      "assets/login_passeye.png",
-                                      width: 9.w,
-                                      height: 6.59.h,
-                                      fit: BoxFit.fill,
-                                      color: !passwordVisible
-                                          ? Colors.grey
-                                          : ColorsUtil.hexColor(0xFD4049),
-                                    ),
-                                  )),
-                            ],
-                          )),
+                                        color: ColorsUtil.hexColor(0x9F9F9F))),
+                                maxLines: 1,
+                                // maxLength: 10,
+                                //最大行数
+                                autofocus: false,
+                                //是否自动对焦
+                                obscureText: false,
+                                enabled: true,
+                                //是否是密码
+//                  textAlign: TextAlign.center,//文本对齐方式
+                                style: TextStyle(
+                                    fontSize: 6.sp,
+                                    fontWeight: FontWeight.normal,
+                                    color: ColorsUtil.hexColor(0x2F2F2F)),
+                                //输入文本的样式
+                                onChanged: (text) {
+                                  print(
+                                      'change $text' + text.length.toString());
+                                },
+                                onSubmitted: (text) {
+                                  print('submit $text');
+                                  FocusScope.of(context)
+                                      .requestFocus(FocusNode());
+                                },
+                              )),
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  passwordVisible = !passwordVisible;
+                                });
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 6.h),
+                                child: Image.asset(
+                                  "assets/login_passeye.png",
+                                  width: 9.w,
+                                  height: 6.59.h,
+                                  fit: BoxFit.fill,
+                                  color: !passwordVisible
+                                      ? Colors.grey
+                                      : ColorsUtil.hexColor(0xFD4049),
+                                ),
+                              )),
+                        ],
+                      )),
                     ),
                   ),
                 ],
@@ -514,28 +522,11 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 5.h, bottom: 6.5.h),
-                          child: Row(
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Row(
-                                        children: <Widget>[
-                                          Text("确认密码",
-                                              style: TextStyle(
-                                                  fontSize: 8.5.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: ColorsUtil.hexColor(
-                                                      0x333333))),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                          child: Text("确认密码",
+                              style: TextStyle(
+                                  fontSize: 8.5.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorsUtil.hexColor(0x333333))),
                         ),
                       ],
                     ),
@@ -560,69 +551,69 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                           color: ColorsUtil.hexColor(0xF2F2F2)),
                       child: Center(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                // margin: EdgeInsets.only(left: 5.w, top: 5.h),
-                                  height: 16.h,
-                                  width: 72.w,
-                                  child: TextField(
-                                    // controller: khxm,
-                                    cursorColor: ColorsUtil.hexColor(0x9F9F9F),
-                                    //设置光标
-                                    decoration: InputDecoration(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                              // margin: EdgeInsets.only(left: 5.w, top: 5.h),
+                              height: 16.h,
+                              width: 72.w,
+                              child: TextField(
+                                controller: remima,
+                                cursorColor: ColorsUtil.hexColor(0x9F9F9F),
+                                //设置光标
+                                decoration: InputDecoration(
 //                        contentPadding: const EdgeInsets.symmetric(vertical: 9.8),
-                                        border: InputBorder.none,
-                                        hintText: "请输入手机号",
-                                        hintStyle: new TextStyle(
-                                            fontSize: 6.sp,
-                                            fontWeight: FontWeight.normal,
-                                            color: ColorsUtil.hexColor(0x9F9F9F))),
-                                    maxLines: 1,
-                                    // maxLength: 10,
-                                    //最大行数
-                                    autofocus: false,
-                                    //是否自动对焦
-                                    obscureText: false,
-                                    enabled: true,
-                                    //是否是密码
-//                  textAlign: TextAlign.center,//文本对齐方式
-                                    style: TextStyle(
+                                    border: InputBorder.none,
+                                    hintText: "请再次输入密码",
+                                    hintStyle: new TextStyle(
                                         fontSize: 6.sp,
                                         fontWeight: FontWeight.normal,
-                                        color: ColorsUtil.hexColor(0x2F2F2F)),
-                                    //输入文本的样式
-                                    onChanged: (text) {
-                                      print(
-                                          'change $text' + text.length.toString());
-                                    },
-                                    onSubmitted: (text) {
-                                      print('submit $text');
-                                      FocusScope.of(context)
-                                          .requestFocus(FocusNode());
-                                    },
-                                  )),
-                              GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      passwordVisible = !passwordVisible;
-                                    });
-                                  },
-                                  child: Container(
-                                    margin: EdgeInsets.only(bottom: 6.h),
-                                    child: Image.asset(
-                                      "assets/login_passeye.png",
-                                      width: 9.w,
-                                      height: 6.59.h,
-                                      fit: BoxFit.fill,
-                                      color: !passwordVisible
-                                          ? Colors.grey
-                                          : ColorsUtil.hexColor(0xFD4049),
-                                    ),
-                                  )),
-                            ],
-                          )),
+                                        color: ColorsUtil.hexColor(0x9F9F9F))),
+                                maxLines: 1,
+                                // maxLength: 10,
+                                //最大行数
+                                autofocus: false,
+                                //是否自动对焦
+                                obscureText: false,
+                                enabled: true,
+                                //是否是密码
+//                  textAlign: TextAlign.center,//文本对齐方式
+                                style: TextStyle(
+                                    fontSize: 6.sp,
+                                    fontWeight: FontWeight.normal,
+                                    color: ColorsUtil.hexColor(0x2F2F2F)),
+                                //输入文本的样式
+                                onChanged: (text) {
+                                  print(
+                                      'change $text' + text.length.toString());
+                                },
+                                onSubmitted: (text) {
+                                  print('submit $text');
+                                  FocusScope.of(context)
+                                      .requestFocus(FocusNode());
+                                },
+                              )),
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  passwordVisible = !passwordVisible;
+                                });
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 6.h),
+                                child: Image.asset(
+                                  "assets/login_passeye.png",
+                                  width: 9.w,
+                                  height: 6.59.h,
+                                  fit: BoxFit.fill,
+                                  color: !passwordVisible
+                                      ? Colors.grey
+                                      : ColorsUtil.hexColor(0xFD4049),
+                                ),
+                              )),
+                        ],
+                      )),
                     ),
                   ),
                 ],
@@ -639,92 +630,51 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                 height: ScreenUtil().setHeight(19),
                 child: MaterialButton(
                   onPressed: () async {
-                    // if (!xieyi) {
-                    //   Fluttertoast.showToast(
-                    //       msg: "请勾选协议",
-                    //       toastLength: Toast.LENGTH_SHORT,
-                    //       gravity: ToastGravity.CENTER,
-                    //       timeInSecForIosWeb: 1,
-                    //       backgroundColor: Colors.black,
-                    //       textColor: Colors.white,
-                    //       fontSize: 6.5.sp);
-                    //   return;
-                    // }
-                    // var phone = CommonUtil.noBlank(shoujihao.text.toString());
-                    // if (phone == null || phone.length == 0) {
-                    //   Fluttertoast.showToast(
-                    //       msg: "请输入手机号",
-                    //       toastLength: Toast.LENGTH_SHORT,
-                    //       gravity: ToastGravity.CENTER,
-                    //       timeInSecForIosWeb: 1,
-                    //       backgroundColor: Colors.black,
-                    //       textColor: Colors.white,
-                    //       fontSize: 6.5.sp);
-                    //   return;
-                    // }
-                    // if (!CommonUtil.isChinaPhoneLegal(phone)) {
-                    //   Fluttertoast.showToast(
-                    //       msg: "手机号输入有误",
-                    //       toastLength: Toast.LENGTH_SHORT,
-                    //       gravity: ToastGravity.CENTER,
-                    //       timeInSecForIosWeb: 1,
-                    //       backgroundColor: Colors.black,
-                    //       textColor: Colors.white,
-                    //       fontSize: 6.5.sp);
-                    //   return;
-                    // }
-                    // if (yazhengma.text.toString() == null ||
-                    //     yazhengma.text.length < 6) {
-                    //   Fluttertoast.showToast(
-                    //       msg: "请输入密码",
-                    //       toastLength: Toast.LENGTH_SHORT,
-                    //       gravity: ToastGravity.CENTER,
-                    //       timeInSecForIosWeb: 1,
-                    //       backgroundColor: Colors.black,
-                    //       textColor: Colors.white,
-                    //       fontSize: 6.5.sp);
-                    //   return;
-                    // }
-                    // Map<String, dynamic> postMap = new Map<String, dynamic>();
-                    // postMap['phone'] =
-                    //     CommonUtil.noBlank(shoujihao.text.toString());
-                    // postMap['pass'] = CommonUtil.generateMd5(yazhengma.text);
-                    // postMap['login_type'] = 3;
-                    //
-                    // var result =
-                    // await NetWorkUtil.postHttp("appApi/login", postMap);
-                    // Map resultMap = json.decode(result.toString());
-                    // if (resultMap["code"] == 200) {
-                    //   SharedPreferences prefs = await SharedPreferences.getInstance();
-                    //   await prefs.setString("token", resultMap["data"]["token"]);
-                    //   await prefs.setString("phone", CommonUtil.noBlank(shoujihao.text.toString()));
-                    //   if (resultMap["data"]["new"] == true) {
-                    //     Navigator.pushAndRemoveUntil(
-                    //         context,
-                    //         RouteUtil.createRoute(IdentityPage()),
-                    //             (check) => false);
-                    //   } else {
-                    //     Navigator.pushAndRemoveUntil(
-                    //         context,
-                    //         RouteUtil.createRoute(BaseTabBar(
-                    //             (resultMap["data"]["identity"] == 1 ||
-                    //                 resultMap["data"]["identity"] == 2)
-                    //                 ? true
-                    //                 : true)),
-                    //             (check) => false);
-                    //   }
-                    //   return;
-                    // } else {
-                    //   Fluttertoast.showToast(
-                    //       msg: resultMap["msg"].toString(),
-                    //       toastLength: Toast.LENGTH_SHORT,
-                    //       gravity: ToastGravity.CENTER,
-                    //       timeInSecForIosWeb: 1,
-                    //       backgroundColor: Colors.black,
-                    //       textColor: Colors.white,
-                    //       fontSize: 6.5.sp);
-                    //   return;
-                    // }
+                    var phone = CommonUtil.noBlank(shoujihao.text.toString());
+                    if (phone == null || phone.length == 0) {
+                      Toast.show("请输入手机号");
+                      return;
+                    }
+                    if (!CommonUtil.isChinaPhoneLegal(phone)) {
+                      Toast.show("手机号输入有误");
+                      return;
+                    }
+                    if (yazhengma.text.toString() == null ||
+                        yazhengma.text.length < 4) {
+                      Toast.show("验证码输入有误");
+                      return;
+                    }
+                    if (mima.text.toString() == null ||
+                        mima.text.length < 8) {
+                      Toast.show("密码格式有误，不少于8位");
+                      return;
+                    }
+                    if (mima.text.toString() != remima.text.toString()) {
+                      Toast.show("两次输入的密码不一致");
+                      return;
+                    }
+                    Map<String, dynamic> postMap = new Map<String, dynamic>();
+                    postMap['phone'] =
+                        CommonUtil.noBlank(shoujihao.text.toString());
+                    postMap['code'] = yazhengma.text.toString();
+                    postMap['NewPassword'] = mima.text.toString();
+
+                    var result =
+                    await NetWorkUtil.postHttp("/u/forgetPW", postMap);
+                    Map resultMap = json.decode(result.toString());
+                    if (resultMap["code"] == 1) {
+                      Toast.show(resultMap["message"].toString());
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      await prefs.setString("token", "");
+                      Navigator.pushAndRemoveUntil(
+                          this.context,
+                          RouteUtil.createRoute(LoginPage(false)),
+                              (check) => false);
+                      return;
+                    } else {
+                      Toast.show(resultMap["message"].toString());
+                      return;
+                    }
                   },
                   child: Container(
                       height: 15.h,
@@ -736,7 +686,7 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                                 color: Colors.white)),
                       )),
                   color: ((shoujihao.text.length > 0) &&
-                      (yazhengma.text.length > 0))
+                          (yazhengma.text.length > 0))
                       ? Colors.grey
                       : Colors.grey,
                   textColor: Colors.white,
