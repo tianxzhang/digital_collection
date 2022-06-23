@@ -44,6 +44,12 @@ dependencies:
   toast: ^0.3.0
   flutter_aliyun_captcha: ^1.0.4
   pull_to_refresh: ^2.0.0
+  dio: ^4.0.0
+  dio_cookie_manager: ^2.0.0
+  cookie_jar: ^3.0.1
+  path_provider: ^2.0.2
+  device_info_plus: ^3.0.1
+  package_info_plus: ^1.4.2
 #  fluttertoast: ^8.0.7
 
 dev_dependencies:

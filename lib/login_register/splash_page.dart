@@ -8,6 +8,7 @@ import 'package:digital_collection/util/route_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,6 +19,7 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   SharedPreferences? prefs;
+  PackageInfo? _packageInfo;
   var resultData;
   @override
   void initState() {
@@ -27,6 +29,8 @@ class _SplashState extends State<Splash> {
 
   Future getPrefs() async {
     prefs = await SharedPreferences.getInstance();
+    _packageInfo = await PackageInfo.fromPlatform();
+    prefs!.setString("version", _packageInfo?.version??"");
     if(prefs!.getBool("isFirstLaunch")??true) {
       showPrivacyDialog();
     }else {

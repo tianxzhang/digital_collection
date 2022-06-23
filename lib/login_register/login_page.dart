@@ -123,7 +123,7 @@ class LoginPageState extends State<LoginPage>
                           ),
                           Container(
                             margin: EdgeInsets.only(bottom: 6.h),
-                            child: Text("手机号",
+                            child: Text("账号",
                                 style: TextStyle(
                                     fontSize: 8.5.sp,
                                     fontWeight: FontWeight.bold,
