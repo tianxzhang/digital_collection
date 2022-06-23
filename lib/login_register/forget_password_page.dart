@@ -307,13 +307,13 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                                       return AlertDialog(
                                         content: Container(
                                           width: double.infinity,
-                                          height: 10.h,
+                                          height: 20.h,
                                           child: AliyunCaptchaButton(
                                             controller: _captchaController,
                                             type: AliyunCaptchaType.slide,
                                             option: AliyunCaptchaOption(
-                                              appKey: '<appKey>',
-                                              scene: 'scene',
+                                              appKey: 'FFFF0N0000000000A9AB',
+                                              scene: 'nc_message_h5',
                                               language: 'cn',
                                             ),
                                             customStyle: '''
@@ -323,7 +323,7 @@ class ForgetPasswordPageState extends State<ForgetPasswordPage>
                                               }
                                             ''',
                                             onSuccess: (dynamic data) {
-
+                                              Navigator.of(context).pop();
                                             },
                                             onFailure: (String failCode) {
 
