@@ -4,6 +4,8 @@ import 'package:digital_collection/util/color_util.dart';
 import 'package:digital_collection/util/route_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:toast/toast.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,15 +15,38 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   bool isLogin = false;
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Stack(
         children: [
-          Container(
-            child: Center(
-              child: Text("Home"),
+          SmartRefresher(
+            enablePullUp: true,
+            enablePullDown: false,
+            header: WaterDropMaterialHeader(),
+            controller: _refreshController,
+            onLoading: _onLoading,
+            child: CustomScrollView(
+              slivers: [
+                SliverFixedExtentList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+                      return InkWell(
+                        child: Container(
+                          margin: EdgeInsets.only(left: 8.w, top: 8.h),
+                          child: Center(
+                            child: Text(index.toString()),
+                          ),
+                        ),
+                        onTap: () {
+                          Toast.show(index.toString());
+                        },
+                      );
+                    }, childCount: 20),
+                    itemExtent: 50.h)
+              ],
             ),
           ),
           Positioned(
@@ -85,7 +110,7 @@ class HomePageState extends State<HomePage>
                           ),
                           child: Center(
                             child: Text(
-                              "立即登录",
+                              "登录",
                               style: TextStyle(
                                   color: ColorsUtil.hexColor(0xFFFFFF),
                                   fontSize: 5.sp,
@@ -105,6 +130,10 @@ class HomePageState extends State<HomePage>
         ],
       ),
     );
+  }
+
+  void _onLoading() async {
+    _refreshController.loadNoData();
   }
 
   @override
