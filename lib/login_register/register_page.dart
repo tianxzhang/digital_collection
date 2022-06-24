@@ -789,8 +789,7 @@ class RegisterPageState extends State<RegisterPage>
                       Toast.show("验证码输入有误");
                       return;
                     }
-                    if (mima.text.toString() == null ||
-                        mima.text.length < 8) {
+                    if (mima.text.toString() == null || mima.text.length < 8) {
                       Toast.show("密码输入不符合规范");
                       return;
                     }
@@ -801,21 +800,26 @@ class RegisterPageState extends State<RegisterPage>
                     Map<String, dynamic> postMap = new Map<String, dynamic>();
                     postMap['Phone'] =
                         CommonUtil.noBlank(shoujihao.text.toString());
-                    postMap['code'] = CommonUtil.noBlank(yazhengma.text.toString());
-                    postMap['password'] = CommonUtil.noBlank(mima.text.toString());
+                    postMap['code'] =
+                        CommonUtil.noBlank(yazhengma.text.toString());
+                    postMap['password'] =
+                        CommonUtil.noBlank(mima.text.toString());
                     postMap['inviterCode'] = 0;
 
                     var result =
-                    await NetWorkUtil.postHttp("/u/register", postMap);
+                        await NetWorkUtil.postHttp("/u/register", postMap);
                     Map resultMap = json.decode(result.toString());
                     if (resultMap["code"] == 1) {
-                      SharedPreferences prefs = await SharedPreferences.getInstance();
-                      await prefs.setString("token", resultMap["data"]["token"]);
-                      await prefs.setString("phone", CommonUtil.noBlank(shoujihao.text.toString()));
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      await prefs.setString(
+                          "token", resultMap["data"]["token"]);
+                      await prefs.setString("phone",
+                          CommonUtil.noBlank(shoujihao.text.toString()));
                       Navigator.pushAndRemoveUntil(
                           context,
                           RouteUtil.createRoute(LoginPage(false)),
-                              (check) => false);
+                          (check) => false);
                       return;
                     } else {
                       Toast.show(resultMap['message']);

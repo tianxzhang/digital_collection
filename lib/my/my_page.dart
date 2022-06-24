@@ -1,8 +1,14 @@
 // ignore_for_file: prefer_const_constructors
+import 'dart:convert';
+
 import 'package:digital_collection/util/color_util.dart';
+import 'package:digital_collection/util/network_util.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'model/user_info_entity.dart';
 
 class MyPage extends StatefulWidget {
   @override
@@ -13,6 +19,57 @@ class MyPageState extends State<MyPage>
     with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   bool isLogin = false;
   late SharedPreferences prefs;
+  var resultData;
+  UserInfoEntity userInfoEntity = UserInfoEntity();
+
+  @override
+  void initState() {
+    super.initState();
+    resultData = getData();
+  }
+
+  Future getData() async {
+    return Future.wait([getCollectionData(), getUserData()]);
+  }
+
+  Future getUserData() async {
+    prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("token") != null && prefs.getString("token") != "") {
+      setState(() {
+        isLogin = true;
+      });
+    }
+    Map<String, String> postMap = Map<String, String>();
+    var result = await NetWorkUtil.getHttpQuery("/n/userInfo", postMap);
+    Map<String, dynamic> resultMap = json.decode(result.toString());
+    if (resultMap["code"] == 1) {
+      userInfoEntity = UserInfoEntity.fromJson(resultMap);
+      return;
+    }
+  }
+
+  Future getCollectionData() async {
+    // prefs = await SharedPreferences.getInstance();
+    // if (prefs.getString("token") != null && prefs.getString("token") != "") {
+    //   print("token === " + prefs.getString("token").toString());
+    //   setState(() {
+    //     isLogin = true;
+    //   });
+    // }
+    // Map<String, dynamic> postMap = new Map<String, dynamic>();
+    // var result = await NetWorkUtil.postHttp("appApi/history", postMap);
+    // Map<String, dynamic> resultMap = json.decode(result.toString());
+    // if ((resultMap["data"] as List).length == 0) {
+    //   watchHis = false;
+    //   return;
+    // } else {
+    //   var data = new WatchHistoryEntity().fromJson(resultMap);
+    //   watchHis = true;
+    //   print(resultMap.toString() + "mypagemypage");
+    //   model = data;
+    //   return;
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +95,36 @@ class MyPageState extends State<MyPage>
                           fit: BoxFit.fill,
                         ),
                       ),
-                      Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "未登录",
-                          style:
-                              TextStyle(color: ColorsUtil.hexColor(0xffffff)),
-                        ),
-                      )
+                      if (!isLogin) ...[
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "未登录",
+                            style:
+                                TextStyle(color: ColorsUtil.hexColor(0xffffff)),
+                          ),
+                        )
+                      ] else ...[
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Text(
+                                userInfoEntity.data?.nickName ?? "",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                            Container(
+                              child: Text(
+                                userInfoEntity.data?.address ?? "",
+                                style: TextStyle(color: Colors.black),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        )
+                      ]
                     ],
                   ),
                   Container(
@@ -58,6 +137,7 @@ class MyPageState extends State<MyPage>
           ),
           SliverToBoxAdapter(
             child: Container(
+              margin: EdgeInsets.only(top: 10.h),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -91,12 +171,12 @@ class MyPageState extends State<MyPage>
                           child: Column(
                             children: [
                               Container(
-                                child: Icon(Icons.person),
+                                child: Icon(Icons.credit_card_rounded),
                               ),
                               Container(
                                 margin: EdgeInsets.only(top: 3.h),
                                 child: Text(
-                                  "我的订单",
+                                  "转赠记录",
                                   style: TextStyle(
                                     color: ColorsUtil.hexColor(0x333333),
                                     fontSize: 6.sp,
@@ -113,12 +193,12 @@ class MyPageState extends State<MyPage>
                           child: Column(
                             children: [
                               Container(
-                                child: Icon(Icons.person),
+                                child: Icon(Icons.share),
                               ),
                               Container(
                                 margin: EdgeInsets.only(top: 3.h),
                                 child: Text(
-                                  "我的订单",
+                                  "分享",
                                   style: TextStyle(
                                     color: ColorsUtil.hexColor(0x333333),
                                     fontSize: 6.sp,
@@ -128,19 +208,19 @@ class MyPageState extends State<MyPage>
                             ],
                           ),
                         ),
-                        onTap: () async {},
+                        onTap: () async {Share.share('玄梦阁数藏');},
                       ),
                       GestureDetector(
                         child: Container(
                           child: Column(
                             children: [
                               Container(
-                                child: Icon(Icons.person),
+                                child: Icon(Icons.settings),
                               ),
                               Container(
                                 margin: EdgeInsets.only(top: 3.h),
                                 child: Text(
-                                  "我的订单",
+                                  "设置",
                                   style: TextStyle(
                                     color: ColorsUtil.hexColor(0x333333),
                                     fontSize: 6.sp,
@@ -154,99 +234,96 @@ class MyPageState extends State<MyPage>
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      GestureDetector(
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Container(
-                                child: Icon(Icons.person),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 3.h),
-                                child: Text(
-                                  "我的订单",
-                                  style: TextStyle(
-                                    color: ColorsUtil.hexColor(0x333333),
-                                    fontSize: 6.sp,
+                  Container(
+                    margin: EdgeInsets.only(top: 10.h),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        GestureDetector(
+                          child: Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  child: Icon(Icons.drive_file_rename_outline),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 3.h),
+                                  child: Text(
+                                    "实名认证",
+                                    style: TextStyle(
+                                      color: ColorsUtil.hexColor(0x333333),
+                                      fontSize: 6.sp,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
+                          onTap: () async {},
                         ),
-                        onTap: () async {},
-                      ),
-                      GestureDetector(
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Container(
-                                child: Icon(Icons.person),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 3.h),
-                                child: Text(
-                                  "我的订单",
-                                  style: TextStyle(
-                                    color: ColorsUtil.hexColor(0x333333),
-                                    fontSize: 6.sp,
+                        GestureDetector(
+                          child: Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 20.w,
+                                  margin: EdgeInsets.only(top: 3.h),
+                                  child: Text(
+                                    "",
+                                    style: TextStyle(
+                                      color: ColorsUtil.hexColor(0x333333),
+                                      fontSize: 6.sp,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
+                          onTap: () async {},
                         ),
-                        onTap: () async {},
-                      ),
-                      GestureDetector(
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Container(
-                                child: Icon(Icons.person),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 3.h),
-                                child: Text(
-                                  "我的订单",
-                                  style: TextStyle(
-                                    color: ColorsUtil.hexColor(0x333333),
-                                    fontSize: 6.sp,
+                        GestureDetector(
+                          child: Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 20.w,
+                                  margin: EdgeInsets.only(top: 3.h),
+                                  child: Text(
+                                    "",
+                                    style: TextStyle(
+                                      color: ColorsUtil.hexColor(0x333333),
+                                      fontSize: 6.sp,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
+                          onTap: () async {},
                         ),
-                        onTap: () async {},
-                      ),
-                      GestureDetector(
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Container(
-                                child: Icon(Icons.person),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 3.h),
-                                child: Text(
-                                  "我的订单",
-                                  style: TextStyle(
-                                    color: ColorsUtil.hexColor(0x333333),
-                                    fontSize: 6.sp,
+                        GestureDetector(
+                          child: Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 20.w,
+                                  margin: EdgeInsets.only(top: 3.h),
+                                  child: Text(
+                                    "",
+                                    style: TextStyle(
+                                      color: ColorsUtil.hexColor(0x333333),
+                                      fontSize: 6.sp,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
+                          onTap: () async {},
                         ),
-                        onTap: () async {},
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
@@ -261,6 +338,8 @@ class MyPageState extends State<MyPage>
             ),
           ),
           SliverToBoxAdapter(
+              child: Offstage(
+            offstage: isLogin,
             child: Container(
 //              margin: EdgeInsets.only(top: ScreenUtil().setWidth(50)),
               margin: EdgeInsets.only(
@@ -380,7 +459,7 @@ class MyPageState extends State<MyPage>
                     borderRadius: BorderRadius.circular(10)),
               ),
             ),
-          )
+          ))
         ],
       ),
     ));

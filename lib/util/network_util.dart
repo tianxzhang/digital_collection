@@ -23,7 +23,29 @@ class NetWorkUtil {
 
   static Future getHttp(String url) async {
     EasyLoading.show(status: 'loading...');
-
+    Options option = new Options();
+    Map<String, String> headers = new Map<String, String>();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString("token") ?? "";
+    print("token === " + token);
+    if (token.length > 0) {
+      headers[HttpHeaders.authorizationHeader] = "Bearer $token";
+    }
+    if (Platform.isAndroid) {
+      headers["os"] = 'android';
+    } else if (Platform.isIOS) {
+      headers["os"] = 'ios';
+    } else if (Platform.isWindows) {
+      headers["os"] = 'windows';
+    } else if (Platform.isMacOS) {
+      headers["os"] = 'macos';
+    } else if (Platform.isLinux) {
+      headers["os"] = 'linux';
+    } else {
+      headers["os"] = "Unknown";
+    }
+    headers["appVersion"] = sharedPreferences.getString("version")??"";
+    option.headers = headers;
     try {
       Response response = await getDio().get(ConfigUtil.baseUrl + url);
       print('请求数据:' + response.toString());
@@ -57,10 +79,34 @@ class NetWorkUtil {
 
   static Future getHttpQuery(String url, Map<String, String> map) async {
     EasyLoading.show(status: 'loading...');
+    Options option = new Options();
+    Map<String, String> headers = new Map<String, String>();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString("token") ?? "";
+    print("token === " + token);
+    if (token.length > 0) {
+      // headers["Authorization"] = token;
+      headers[HttpHeaders.authorizationHeader] = "Bearer $token";
+    }
+    if (Platform.isAndroid) {
+      headers["os"] = 'android';
+    } else if (Platform.isIOS) {
+      headers["os"] = 'ios';
+    } else if (Platform.isWindows) {
+      headers["os"] = 'windows';
+    } else if (Platform.isMacOS) {
+      headers["os"] = 'macos';
+    } else if (Platform.isLinux) {
+      headers["os"] = 'linux';
+    } else {
+      headers["os"] = "Unknown";
+    }
+    headers["appVersion"] = sharedPreferences.getString("version")??"";
+    option.headers = headers;
 
     try {
       Response response =
-          await getDio().get(ConfigUtil.baseUrl + url, queryParameters: map);
+          await getDio().get(ConfigUtil.baseUrl + url, queryParameters: map,options: option);
       print('请求数据:' + response.toString());
       EasyLoading.dismiss();
       return response;
@@ -127,7 +173,7 @@ class NetWorkUtil {
     } else if (Platform.isLinux) {
       headers["os"] = 'linux';
     } else {
-      device = "Unknown";
+      headers["os"] = "Unknown";
     }
     headers["appVersion"] = sharedPreferences.getString("version")??"";
 
