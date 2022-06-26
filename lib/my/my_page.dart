@@ -256,7 +256,7 @@ class MyPageState extends State<MyPage>
                                 ),
                                 onTap: () async {
                                   Navigator.push(
-                                      context, RouteUtil.createRoute(SettingPage()));
+                                      context, RouteUtil.createRoute(SettingPage(userInfoEntity.data!)));
                                 },
                               ),
                             ],
@@ -465,7 +465,7 @@ class MyPageState extends State<MyPage>
                           },
                         );
                       },
-                      itemCount: collectionEntity.data!.list!.length,
+                      itemCount: (collectionEntity.data?.list?.length)??0,
                     ),
                   ),
                   SliverToBoxAdapter(
