@@ -16,6 +16,28 @@ class UserOrderPageState extends State<UserOrderPage>
   bool get wantKeepAlive => true;
 
   @override
+  void initState() {
+    super.initState();
+    resultData = getData();
+  }
+
+  Future getData() async {
+    // prefs = await SharedPreferences.getInstance();
+    // if (prefs.getString("token") != null && prefs.getString("token") != "") {
+    //   setState(() {
+    //     isLogin = true;
+    //   });
+    // }
+    // Map<String, String> postMap = Map<String, String>();
+    // var result = await NetWorkUtil.getHttpQuery("/n/userInfo", postMap);
+    // Map<String, dynamic> resultMap = json.decode(result.toString());
+    // if (resultMap["code"] == 1) {
+    //   userInfoEntity = UserInfoEntity.fromJson(resultMap);
+    //   return;
+    // }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(

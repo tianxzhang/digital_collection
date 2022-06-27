@@ -15,6 +15,7 @@ class AboutPageState extends State<AboutPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorsUtil.hexColor(0x1E201F),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -23,13 +24,14 @@ class AboutPageState extends State<AboutPage>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 8.w, right: 8.w, top: 6.5.h),
+                  margin: EdgeInsets.only(top: 15.w,left: 15.w,right: 15.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
                         child: Container(
-                          child: Icon(Icons.arrow_back_ios),
+                          width: 20.w,
+                          child: Icon(Icons.arrow_back_ios,color: ColorsUtil.hexColor(0xB5B5B5),),
                         ),
                         onTap: () {
                           Navigator.pop(context);
@@ -38,46 +40,45 @@ class AboutPageState extends State<AboutPage>
                       Container(
                         child: Text("关于我们",
                             style: TextStyle(
-                                color: ColorsUtil.hexColor(0x000000),
-                                fontSize: 9.sp,
+                                color: ColorsUtil.hexColor(0xffffff),
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.bold)),
                       ),
                       Container(
-                        width: 5.27.w,
+                        width: 20.w,
                         child: Text(""),
                       )
                     ],
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 30.5.h),
-                  height: 100.h,
+                  margin: EdgeInsets.only(top: 70.h),
                   child: Center(
                     child: Column(
                       children: [
                         Container(
                           child: Image.asset(
-                            "assets/start_page.png",
-                            // width: 32.5.w,
-                            height: 32.5.w,
-                            fit: BoxFit.fitHeight,
+                            "assets/21.png",
+                            width: 83.w,
+                            height: 83.w,
+                            fit: BoxFit.cover,
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: 6.h),
+                          margin: EdgeInsets.only(top: 15.h),
                           child: Text("玄梦阁数藏",
                               style: TextStyle(
-                                  color: ColorsUtil.hexColor(0x333333),
-                                  fontSize: 9.sp,
+                                  color: ColorsUtil.hexColor(0xffffff),
+                                  fontSize: 18.sp,
                                   fontWeight: FontWeight.bold
                               )),
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: 3.h),
+                          margin: EdgeInsets.only(top: 9.h),
                           child: Text("Version 1.0.1",
                               style: TextStyle(
-                                  color: ColorsUtil.hexColor(0x666666),
-                                  fontSize: 6.sp,
+                                  color: ColorsUtil.hexColor(0xB5B5B5),
+                                  fontSize: 14.sp,
                                   fontWeight: FontWeight.bold
                               )),
                         ),
@@ -90,8 +91,22 @@ class AboutPageState extends State<AboutPage>
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text("Copyright@2022-2100"),
-                Text("玄梦阁数藏版权所有")
+                Container(
+                  child: Text("Copyright@2022-2100",style: TextStyle(
+                      color: ColorsUtil.hexColor(0xffffff),
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.bold
+                  )),
+                )
+                ,
+               Container(
+                 margin: EdgeInsets.only(bottom: 53.h,top: 22.h),
+                 child:  Text("玄梦阁数藏版权所有",style: TextStyle(
+                     color: ColorsUtil.hexColor(0xffffff),
+                     fontSize: 15.sp,
+                     fontWeight: FontWeight.bold
+                 )),
+               )
               ],
             )
           ],

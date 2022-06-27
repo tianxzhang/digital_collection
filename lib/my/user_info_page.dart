@@ -26,127 +26,207 @@ class UserInfoPageState extends State<UserInfoPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorsUtil.hexColor(0x1E201F),
       body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(left: 8.w, right: 8.w, top: 6.5.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    child: Container(
-                      child: Icon(Icons.arrow_back_ios),
-                    ),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  Container(
-                    child: Text("个人信息",
-                        style: TextStyle(
-                            color: ColorsUtil.hexColor(0x000000),
-                            fontSize: 9.sp,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                  Container(
-                    width: 5.27.w,
-                    child: Text(""),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 10.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.person),
-                      Container(
-                        child: Text("头像"),
-                      )
-                    ],
-                  ),
-                  Container(
-                      width: 15.w,
-                      height: 15.h,
-                      child: CachedNetworkImage(
-                        fit: BoxFit.contain,
-                        httpHeaders: const {
-                          'referer': 'http://app.xuanmengge.com'
-                        },
-                        placeholder: (context, url) => const Center(
-                          child: CupertinoActivityIndicator(),
-                        ),
-                        imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.r),
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
-                        imageUrl: widget.userInfoData.photo ?? "",
-                      ))
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 10.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.paste),
-                      Container(
-                        child: Text("昵称"),
-                      )
-                    ],
-                  ),
-                  Text(widget.userInfoData.nickName ?? "")
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 10.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.phone_android),
-                      Container(
-                        child: Text("手机号"),
-                      )
-                    ],
-                  ),
-                  Text(widget.userInfoData.phone ?? "")
-                ],
-              ),
-            ),
-            InkWell(
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              child: Container(
-                margin: EdgeInsets.only(top: 10.h),
+        child: Container(
+          padding: EdgeInsets.all(15.w),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                        child: Row(
+                    InkWell(
+                      child: Container(
+                        width: 20.w,
+                        child: Icon(Icons.arrow_back_ios,color: ColorsUtil.hexColor(0xB5B5B5),),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    Container(
+                      child: Text("个人信息",
+                          style: TextStyle(
+                              color: ColorsUtil.hexColor(0xffffff),
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                    Container(
+                      width: 20.w,
+                      child: Text(""),
+                    )
+                  ],
+                ),
+              ),
+  Container(
+                  margin: EdgeInsets.only(top: 15.h),
+    padding: EdgeInsets.all(13.w),
+    decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: ColorsUtil.hexColor(0x343635)),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 32.w,
+                    height: 32.w,
+                    child: Image.asset("assets/8.png"),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 9.w),
+                    child: Text("头像",style: TextStyle(
+                      color:
+                      ColorsUtil.hexColor(0xffffff),
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold
+                    ),),
+                  )
+                ],
+              ),
+
+              Container(
+                  width: 35.w,
+                  height: 35.w,
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    httpHeaders: const {
+                      'referer': 'http://app.xuanmengge.com'
+                    },
+                    placeholder: (context, url) => const Center(
+                      child: CupertinoActivityIndicator(),
+                    ),
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        // borderRadius: BorderRadius.circular(5.r),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    imageUrl: widget.userInfoData.photo ?? "",
+                  ))
+            ],
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 10.h),
+          height: 1.h,
+          width: 1.sw-60.w,
+          color: ColorsUtil.hexColor(0x414443),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 10.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 32.w,
+                    height: 32.w,
+                    child: Image.asset("assets/9.png"),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 9.w),
+                    child: Text("昵称",style: TextStyle(
+                        color:
+                        ColorsUtil.hexColor(0xffffff),
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold
+                    ),),
+                  )
+                ],
+              ),
+              Text(widget.userInfoData.nickName ?? "",style: TextStyle(
+                  color:
+                  ColorsUtil.hexColor(0xB5B5B5),
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold
+              ))
+            ],
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 10.h),
+          height: 1.h,
+          width: 1.sw-60.w,
+          color: ColorsUtil.hexColor(0x414443),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 10.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 32.w,
+                    height: 32.w,
+                    child: Image.asset("assets/10.png"),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 9.w),
+                    child: Text("手机号",style: TextStyle(
+                        color:
+                        ColorsUtil.hexColor(0xffffff),
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold
+                    ),),
+                  )
+                ],
+              ),
+              Text(widget.userInfoData.phone ?? "",style: TextStyle(
+                  color:
+                  ColorsUtil.hexColor(0xB5B5B5),
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold
+              ))
+            ],
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 10.h),
+          height: 1.h,
+          width: 1.sw-60.w,
+          color: ColorsUtil.hexColor(0x414443),
+        ),
+        InkWell(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          child: Container(
+            margin: EdgeInsets.only(top: 10.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.share),
                         Container(
-                          child: Text("区块链地址   "),
+                          width: 32.w,
+                          height: 32.w,
+                          child: Image.asset("assets/11.png"),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 9.w),
+                          child: Text("区块链地址         ",style: TextStyle(
+                              color:
+                              ColorsUtil.hexColor(0xffffff),
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold
+                          ),),
                         ),
                         ConstrainedBox(
                           constraints: BoxConstraints(maxWidth: 120.w),
@@ -154,48 +234,78 @@ class UserInfoPageState extends State<UserInfoPage>
                             widget.userInfoData.address ?? "",
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
+                            textAlign: TextAlign.end,
                             softWrap: true,
+                              style: TextStyle(
+                                  color:
+                                  ColorsUtil.hexColor(0xB5B5B5),
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.bold
+                              )
                           ),
                         )
                       ],
                     )),
-                    Icon(Icons.arrow_forward_ios)
-                  ],
-                ),
-              ),
-              onTap: () {
-                Navigator.push(
-                    context, RouteUtil.createRoute(BlockAddressPage(widget.userInfoData.address??"")));
-              },
+                Icon(Icons.arrow_forward_ios,color: ColorsUtil.hexColor(0xB5B5B5))
+              ],
             ),
-            InkWell(
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              child: Container(
-                margin: EdgeInsets.only(top: 10.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          ),
+          onTap: () {
+            Navigator.push(
+                context, RouteUtil.createRoute(BlockAddressPage(widget.userInfoData.address??"")));
+          },
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 10.h),
+          height: 1.h,
+          width: 1.sw-60.w,
+          color: ColorsUtil.hexColor(0x414443),
+        ),
+        InkWell(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          child: Container(
+            margin: EdgeInsets.only(top: 10.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.location_on),
-                        Container(
-                          child: Text("收货地址"),
-                        )
-                      ],
+                    Container(
+                      width: 32.w,
+                      height: 32.w,
+                      child: Image.asset("assets/12.png"),
                     ),
-                    Icon(Icons.arrow_forward_ios)
+                    Container(
+                      margin: EdgeInsets.only(left: 9.w),
+                      child: Text("收货地址",style: TextStyle(
+                          color:
+                          ColorsUtil.hexColor(0xffffff),
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold
+                      ),),
+                    ),
                   ],
                 ),
-              ),
-              onTap: () {
-                Navigator.push(
-                    context, RouteUtil.createRoute(UserAddressPage()));
-              },
-            )
-          ],
-        ),
+                Icon(Icons.arrow_forward_ios,color: ColorsUtil.hexColor(0xB5B5B5))
+              ],
+            ),
+          ),
+          onTap: () {
+            Navigator.push(
+                context, RouteUtil.createRoute(UserAddressPage()));
+          },
+        )
+      ],
+    ),
+  )
+               
+              
+            ],
+          ),
+        )
+        ,
       ),
     );
   }

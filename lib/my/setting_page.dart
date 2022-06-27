@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:digital_collection/login_register/login_page.dart';
 import 'package:digital_collection/my/about_page.dart';
+import 'package:digital_collection/my/operate_password_page.dart';
 import 'package:digital_collection/my/user_info_page.dart';
 import 'package:digital_collection/util/color_util.dart';
 import 'package:digital_collection/util/route_util.dart';
@@ -43,43 +45,7 @@ class SettingPageState extends State<SettingPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        child: Container(
-          // height: 22.h,
-          decoration: BoxDecoration(
-            color: Colors.white,
-          ),
-          padding: EdgeInsets.only(
-              top: MediaQueryData.fromWindow(window).padding.top + 10.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                  padding: EdgeInsets.only(left: 8.w),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Image.asset(
-                      "assets/login_leftarrow.png",
-                      width: 12.w,
-                      height: 12.w,
-                      fit: BoxFit.fill,
-                    ),
-                  )),
-              Text("设置"),
-              Padding(
-                padding: EdgeInsets.only(right: 8.w),
-                child: Container(width: 10.w,),
-              ),
-            ],
-          ),
-        ),
-        preferredSize: Size(
-          MediaQueryData.fromWindow(window).size.width,
-          MediaQueryData.fromWindow(window).padding.top + 17.h,
-        ),
-      ),
+      backgroundColor: ColorsUtil.hexColor(0x1E201F),
       body: FutureBuilder(
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
@@ -92,9 +58,40 @@ class SettingPageState extends State<SettingPage>
             case ConnectionState.done:
               return CustomScrollView(
                 slivers: [
+                  SliverToBoxAdapter(child: SafeArea(child: Container(
+                    margin: EdgeInsets.only(top: 15.w,left: 15.w,right: 15.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          child: Container(
+                            width: 20.w,
+                            child: Icon(Icons.arrow_back_ios,color: ColorsUtil.hexColor(0xB5B5B5),),
+                          ),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        Container(
+                          child: Text("个人信息",
+                              style: TextStyle(
+                                  color: ColorsUtil.hexColor(0xffffff),
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                        Container(
+                          width: 20.w,
+                          child: Text(""),
+                        )
+                      ],
+                    ),
+                  ),),),
+                  SliverToBoxAdapter(child: Container(margin: EdgeInsets.only(top: 13.h),height: 1.h,color: ColorsUtil.hexColor(0x2D302E),width: 375.w,),),
                   SliverToBoxAdapter(
                     child: Container(
-                      margin: EdgeInsets.only(top: 15.h, left: 8.w, right: 8.w),
+                      margin: EdgeInsets.only(top: 15.h, left: 15.w, right: 15.w),
+                      decoration: BoxDecoration(color: ColorsUtil.hexColor(0x343635),borderRadius: BorderRadius.circular(20)),
+                      padding: EdgeInsets.all(13.w),
                       child: Column(
                         children: [
                           InkWell(
@@ -107,14 +104,24 @@ class SettingPageState extends State<SettingPage>
                                   Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Icon(Icons.person),
                                       Container(
-                                        child: Text("个人信息"),
+                                        width: 32.w,
+                                        height: 32.w,
+                                        child: Image.asset("assets/14.png"),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(left: 9.w),
+                                        child: Text("个人信息",style: TextStyle(
+                                            color:
+                                            ColorsUtil.hexColor(0xffffff),
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.bold
+                                        )),
                                       )
                                     ],
                                   )
                                   ,
-                                  Icon(Icons.arrow_forward_ios)
+                                  Icon(Icons.arrow_forward_ios,color: ColorsUtil.hexColor(0xB5B5B5),)
                                 ],
                               ),
                             ),
@@ -122,25 +129,6 @@ class SettingPageState extends State<SettingPage>
                               Navigator.push(
                                   context, RouteUtil.createRoute(UserInfoPage(widget.userInfoData)));
                             },
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 10.h),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(Icons.admin_panel_settings_sharp),
-                                    Container(
-                                      child: Text("操作密码"),
-                                    )
-                                  ],
-                                )
-                                ,
-                                Icon(Icons.arrow_forward_ios)
-                              ],
-                            ),
                           ),
                           InkWell(
                             highlightColor: Colors.transparent,
@@ -153,14 +141,62 @@ class SettingPageState extends State<SettingPage>
                                   Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Icon(Icons.mediation),
                                       Container(
-                                        child: Text("关于我们"),
+                                        width: 32.w,
+                                        height: 32.w,
+                                        child: Image.asset("assets/15.png"),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(left: 9.w),
+                                        child: Text("操作密码",style: TextStyle(
+                                            color:
+                                            ColorsUtil.hexColor(0xffffff),
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.bold
+                                        )),
                                       )
                                     ],
                                   )
                                   ,
-                                  Icon(Icons.arrow_forward_ios)
+                                  Icon(Icons.arrow_forward_ios,color: ColorsUtil.hexColor(0xB5B5B5))
+                                ],
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                  context, RouteUtil.createRoute(OperatePasswordPage()));
+                            },
+                          )
+                          ,
+                          InkWell(
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            child: Container(
+                              margin: EdgeInsets.only(top: 10.h),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Container(
+                                        width: 32.w,
+                                        height: 32.w,
+                                        child: Image.asset("assets/16.png"),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(left: 9.w),
+                                        child: Text("关于我们",style: TextStyle(
+                                            color:
+                                            ColorsUtil.hexColor(0xffffff),
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.bold
+                                        )),
+                                      )
+                                    ],
+                                  )
+                                  ,
+                                  Icon(Icons.arrow_forward_ios,color: ColorsUtil.hexColor(0xB5B5B5))
                                 ],
                               ),
                             ),
@@ -180,14 +216,24 @@ class SettingPageState extends State<SettingPage>
                                   Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Icon(Icons.mediation),
                                       Container(
-                                        child: Text("联系客服"),
+                                        width: 32.w,
+                                        height: 32.w,
+                                        child: Image.asset("assets/17.png"),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(left: 9.w),
+                                        child: Text("联系客服",style: TextStyle(
+                                            color:
+                                            ColorsUtil.hexColor(0xffffff),
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.bold
+                                        )),
                                       )
                                     ],
                                   )
                                   ,
-                                  Icon(Icons.arrow_forward_ios)
+                                  Icon(Icons.arrow_forward_ios,color: ColorsUtil.hexColor(0xB5B5B5))
                                 ],
                               ),
                             ),
@@ -229,7 +275,9 @@ class SettingPageState extends State<SettingPage>
                   ),
                   SliverToBoxAdapter(
                     child: Container(
-                      margin: EdgeInsets.only(top: 20.h, left: 8.w, right: 8.w),
+                      margin: EdgeInsets.only(top: 18.h, left: 15.w, right: 15.w),
+                      decoration: BoxDecoration(color: ColorsUtil.hexColor(0x343635),borderRadius: BorderRadius.circular(20)),
+                      padding: EdgeInsets.all(13.w),
                       child: Column(
                         children: [
                           Container(
@@ -239,14 +287,24 @@ class SettingPageState extends State<SettingPage>
                                 Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Icon(Icons.person),
                                     Container(
-                                      child: Text("用户协议"),
+                                      width: 32.w,
+                                      height: 32.w,
+                                      child: Image.asset("assets/18.png"),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(left: 9.w),
+                                      child: Text("用户协议",style: TextStyle(
+                                          color:
+                                          ColorsUtil.hexColor(0xffffff),
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.bold
+                                      )),
                                     )
                                   ],
                                 )
                                 ,
-                                Icon(Icons.arrow_forward_ios)
+                                Icon(Icons.arrow_forward_ios,color: ColorsUtil.hexColor(0xB5B5B5))
                               ],
                             ),
                           ),
@@ -258,14 +316,24 @@ class SettingPageState extends State<SettingPage>
                                 Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Icon(Icons.admin_panel_settings_sharp),
                                     Container(
-                                      child: Text("隐私政策"),
+                                      width: 32.w,
+                                      height: 32.w,
+                                      child: Image.asset("assets/19.png"),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(left: 9.w),
+                                      child: Text("隐私政策",style: TextStyle(
+                                          color:
+                                          ColorsUtil.hexColor(0xffffff),
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.bold
+                                      )),
                                     )
                                   ],
                                 )
                                 ,
-                                Icon(Icons.arrow_forward_ios)
+                                Icon(Icons.arrow_forward_ios,color: ColorsUtil.hexColor(0xB5B5B5))
                               ],
                             ),
                           ),
@@ -280,14 +348,24 @@ class SettingPageState extends State<SettingPage>
                                   Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Icon(Icons.mediation),
                                       Container(
-                                        child: Text("检查更新"),
+                                        width: 32.w,
+                                        height: 32.w,
+                                        child: Image.asset("assets/20.png"),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(left: 9.w),
+                                        child: Text("检查更新",style: TextStyle(
+                                            color:
+                                            ColorsUtil.hexColor(0xffffff),
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.bold
+                                        )),
                                       )
                                     ],
                                   )
                                   ,
-                                  Icon(Icons.arrow_forward_ios)
+                                  Icon(Icons.arrow_forward_ios,color: ColorsUtil.hexColor(0xB5B5B5))
                                 ],
                               ),
                             ),
@@ -302,12 +380,12 @@ class SettingPageState extends State<SettingPage>
                   SliverToBoxAdapter(
                       child: InkWell(
                         child: Container(
-                          margin: EdgeInsets.only(left: 8.w, right: 8.w,top: 30.h),
-                          width: 171.5.w,
-                          height: 20.h,
+                          margin: EdgeInsets.only(left: 15.w, right: 15.w,top: 18.h),
+                          width: 1.sw-30.w,
+                          height: 50.h,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.w),
-                              color: Colors.grey
+                              borderRadius: BorderRadius.circular(30),
+                              color: ColorsUtil.hexColor(0x505251)
                             // color: ColorsUtil.hexColor(0x000000, alpha: 0.5),
                             // image: DecorationImage(
                             //     image: AssetImage(
@@ -319,8 +397,8 @@ class SettingPageState extends State<SettingPage>
                             child: Text(
                               "退出登录",
                               style: TextStyle(
-                                  color: Colors.deepOrange,
-                                  fontSize: 8.sp,
+                                  color: ColorsUtil.hexColor(0xFFD86F ),
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
