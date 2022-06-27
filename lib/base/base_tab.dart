@@ -30,6 +30,7 @@ class BaseTabBarState extends State<BaseTabBar>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorsUtil.hexColor(0x1E201F),
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
         controller: controller,
