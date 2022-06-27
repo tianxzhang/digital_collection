@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'dart:io';
 
+import 'package:digital_collection/util/color_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +20,7 @@ void main() {
     SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.dark);
+        statusBarIconBrightness: Brightness.light);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,7 +64,7 @@ class MyAppState extends State<MyApp> {
     ];
 
     return ScreenUtilInit(
-      designSize: Size(187.5, 406),
+      designSize: Size(375, 667),
       builder: (context, child) => MaterialApp(
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
@@ -75,7 +76,7 @@ class MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: "玄梦阁数藏",
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.orange,
         ),
         builder: EasyLoading.init(),
         // builder: (BuildContext context, Widget? child) {

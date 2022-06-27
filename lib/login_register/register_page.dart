@@ -41,45 +41,58 @@ class RegisterPageState extends State<RegisterPage>
   Widget build(BuildContext context) {
     ToastContext().init(context);
     return Scaffold(
+      backgroundColor: ColorsUtil.hexColor(0x1E201F),
       resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         child: Container(
-          // height: 22.h,
-          decoration: BoxDecoration(
-            color: Colors.white,
-          ),
+          // decoration: BoxDecoration(color: Colors.grey),
           padding: EdgeInsets.only(
               top: MediaQueryData.fromWindow(window).padding.top + 10.h),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                  padding: EdgeInsets.only(left: 8.w),
+                  padding: EdgeInsets.only(left: 24.w),
                   child: InkWell(
                     onTap: () {
                       Navigator.pop(context);
                     },
                     child: Image.asset(
                       "assets/login_leftarrow.png",
-                      width: 12.w,
-                      height: 12.w,
+                      width: 24.w,
+                      height: 24.w,
                       fit: BoxFit.fill,
                     ),
                   )),
               Padding(
-                padding: EdgeInsets.only(right: 8.w),
-              ),
+                  padding: EdgeInsets.only(right: 24.w),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context, RouteUtil.createRoute(LoginPage(false)));
+                    },
+                    child: Container(
+                      width: 84.w,
+                      height: 32.h,
+                      alignment: Alignment.center,
+                      child: Text(
+                        '登录',
+                        style: TextStyle(color: ColorsUtil.hexColor(0xCFAE7F),fontSize: 16.sp),
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: ColorsUtil.hexColor(0xCFAE7F)),
+                        borderRadius: BorderRadius.circular(21),
+                      ),
+                    ),
+                  )),
             ],
           ),
         ),
-        preferredSize: Size(
-          MediaQueryData.fromWindow(window).size.width,
-          MediaQueryData.fromWindow(window).padding.top + 17.h,
-        ),
+        preferredSize: Size(MediaQueryData.fromWindow(window).size.width,
+            MediaQueryData.fromWindow(window).padding.top + 17.h),
       ),
       body: SingleChildScrollView(
         child: Container(
-          decoration: BoxDecoration(color: Colors.black38),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -95,7 +108,7 @@ class RegisterPageState extends State<RegisterPage>
                     child: Text(
                       "欢迎注册 玄梦阁数藏",
                       style: TextStyle(
-                          fontSize: 10.sp,
+                          fontSize: 21.sp,
                           fontWeight: FontWeight.bold,
                           color: ColorsUtil.hexColor(0xffffff)),
                       maxLines: 1,
@@ -110,96 +123,81 @@ class RegisterPageState extends State<RegisterPage>
                 children: [
                   Container(
                     margin: EdgeInsets.only(
-                      left: 18.w,
-                      right: 19.w,
-                      top: 18.h,
+                      left: 25.w,
+                      top: 45.h,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
-                          child: Icon(Icons.person),
+                          child: Icon(Icons.person,color: ColorsUtil.hexColor(0xB5B5B5),),
                         ),
                         Container(
-                          margin: EdgeInsets.only(bottom: 0.h),
+                          margin: EdgeInsets.only(left: 5.w),
                           child: Text("账号",
                               style: TextStyle(
-                                  fontSize: 8.5.sp,
+                                  fontSize: 15.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: ColorsUtil.hexColor(0x333333))),
+                                  color: ColorsUtil.hexColor(0xB5B5B5))),
                         ),
                       ],
                     ),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              left: 8.w, right: 8.w, top: 5.h, bottom: 7.5.h),
-                          // width: 100.w,
-                          // height: 16.h,
-                          decoration: new BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.w)),
-                              border: Border.all(
-                                color: ColorsUtil.hexColor(0xF2F2F2),
-                                width: 1.w,
-                                style: BorderStyle.solid,
-                              ),
-                              color: ColorsUtil.hexColor(0xF2F2F2)),
-                          child: Center(
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                  // margin: EdgeInsets.only(left: 5.w, top: 5.h),
-                                  height: 16.h,
-                                  width: 72.w,
-                                  child: TextField(
-                                    controller: shoujihao,
-                                    cursorColor: ColorsUtil.hexColor(0x9F9F9F),
-                                    //设置光标
-                                    decoration: InputDecoration(
+                  Container(
+                      margin: EdgeInsets.only(
+                        left: 25.w, right: 25.w, top: 12.h,),
+                      padding: EdgeInsets.only(left: 25.w),
+                      // width: 100.w,
+                      // height: 16.h,
+                      decoration: new BoxDecoration(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(25.w)),
+                          // border: Border.all(
+                          //   color: ColorsUtil.hexColor(0xF2F2F2),
+                          //   width: 1.w,
+                          //   style: BorderStyle.solid,
+                          // ),
+                          color: ColorsUtil.hexColor(0xffffff,alpha: 0.1)),
+                      child: TextField(
+                        controller: shoujihao,
+                        cursorColor:
+                        ColorsUtil.hexColor(0x9F9F9F),
+                        //设置光标
+                        decoration: InputDecoration(
 //                        contentPadding: const EdgeInsets.symmetric(vertical: 9.8),
-                                        border: InputBorder.none,
-                                        hintText: "请输入手机号",
-                                        hintStyle: new TextStyle(
-                                            fontSize: 6.sp,
-                                            fontWeight: FontWeight.normal,
-                                            color:
-                                                ColorsUtil.hexColor(0x9F9F9F))),
-                                    maxLines: 1,
-                                    // maxLength: 10,
-                                    //最大行数
-                                    autofocus: false,
-                                    //是否自动对焦
-                                    obscureText: false,
-                                    enabled: true,
-                                    //是否是密码
+                            border: InputBorder.none,
+                            hintText: "请输入手机号",
+                            hintStyle: new TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.normal,
+                                color: ColorsUtil.hexColor(
+                                    0x7D7D7D))),
+                        maxLines: 1,
+                        // maxLength: 10,
+                        //最大行数
+                        autofocus: false,
+                        //是否自动对焦
+                        obscureText: false,
+                        enabled: true,
+                        //是否是密码
 //                  textAlign: TextAlign.center,//文本对齐方式
-                                    style: TextStyle(
-                                        fontSize: 6.sp,
-                                        fontWeight: FontWeight.normal,
-                                        color: ColorsUtil.hexColor(0x2F2F2F)),
-                                    //输入文本的样式
-                                    onChanged: (text) {
-                                      print('change $text' +
-                                          text.length.toString());
-                                    },
-                                    onSubmitted: (text) {
-                                      print('submit $text');
-                                      FocusScope.of(context)
-                                          .requestFocus(FocusNode());
-                                    },
-                                  ))
-                            ],
-                          )),
-                        ),
-                      ),
-                    ],
-                  ),
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.normal,
+                            color: ColorsUtil.hexColor(
+                                0x7D7D7D)),
+                        //输入文本的样式
+                        onChanged: (text) {
+                          print('change $text' +
+                              text.length.toString());
+                        },
+                        onSubmitted: (text) {
+                          print('submit $text');
+                          FocusScope.of(context)
+                              .requestFocus(FocusNode());
+                        },
+                      )
+                  )
                 ],
               ),
               Column(
@@ -208,93 +206,85 @@ class RegisterPageState extends State<RegisterPage>
                 children: [
                   Container(
                     margin: EdgeInsets.only(
-                      left: 18.w,
-                      right: 19.w,
-                      top: 0.h,
+                      left: 25.w,
+                      top: 21.h,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
-                          child: Icon(Icons.cloud),
+                          child: Icon(Icons.shield,color: ColorsUtil.hexColor(0xB5B5B5),),
                         ),
                         Container(
-                          margin: EdgeInsets.only(bottom: 0.h),
+                          margin: EdgeInsets.only(left: 5.w),
                           child: Text("验证码",
                               style: TextStyle(
-                                  fontSize: 8.5.sp,
+                                  fontSize: 15.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: ColorsUtil.hexColor(0x333333))),
+                                  color: ColorsUtil.hexColor(0xB5B5B5))),
                         ),
                       ],
                     ),
                   ),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.only(
-                              left: 8.w, right: 8.w, top: 5.h, bottom: 7.5.h),
-                          // width: 100.w,
-                          // height: 16.h,
-                          decoration: new BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.w)),
-                              border: Border.all(
-                                color: ColorsUtil.hexColor(0xF2F2F2),
-                                width: 1.w,
-                                style: BorderStyle.solid,
-                              ),
-                              color: ColorsUtil.hexColor(0xF2F2F2)),
-                          child: Center(
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                  // margin: EdgeInsets.only(left: 5.w, top: 5.h),
-                                  height: 16.h,
-                                  width: 72.w,
-                                  child: TextField(
-                                    controller: yazhengma,
-                                    cursorColor: ColorsUtil.hexColor(0x9F9F9F),
-                                    //设置光标
-                                    decoration: InputDecoration(
+                            margin: EdgeInsets.only(
+                              left: 25.w, right: 15.w, top: 12.h,),
+                            padding: EdgeInsets.only(left: 25.w),
+                            // width: 100.w,
+                            // height: 16.h,
+                            decoration: new BoxDecoration(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(25.w)),
+                                // border: Border.all(
+                                //   color: ColorsUtil.hexColor(0xF2F2F2),
+                                //   width: 1.w,
+                                //   style: BorderStyle.solid,
+                                // ),
+                                color: ColorsUtil.hexColor(0xffffff,alpha: 0.1)),
+                            child: TextField(
+                              controller: yazhengma,
+                              cursorColor:
+                              ColorsUtil.hexColor(0x9F9F9F),
+                              //设置光标
+                              decoration: InputDecoration(
 //                        contentPadding: const EdgeInsets.symmetric(vertical: 9.8),
-                                        border: InputBorder.none,
-                                        hintText: "请输入验证码",
-                                        hintStyle: new TextStyle(
-                                            fontSize: 6.sp,
-                                            fontWeight: FontWeight.normal,
-                                            color:
-                                                ColorsUtil.hexColor(0x9F9F9F))),
-                                    maxLines: 1,
-                                    // maxLength: 10,
-                                    //最大行数
-                                    autofocus: false,
-                                    //是否自动对焦
-                                    obscureText: false,
-                                    enabled: true,
-                                    //是否是密码
+                                  border: InputBorder.none,
+                                  hintText: "请输入验证码",
+                                  hintStyle: new TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.normal,
+                                      color: ColorsUtil.hexColor(
+                                          0x7D7D7D))),
+                              maxLines: 1,
+                              // maxLength: 10,
+                              //最大行数
+                              autofocus: false,
+                              //是否自动对焦
+                              obscureText: false,
+                              enabled: true,
+                              //是否是密码
 //                  textAlign: TextAlign.center,//文本对齐方式
-                                    style: TextStyle(
-                                        fontSize: 6.sp,
-                                        fontWeight: FontWeight.normal,
-                                        color: ColorsUtil.hexColor(0x2F2F2F)),
-                                    //输入文本的样式
-                                    onChanged: (text) {
-                                      print('change $text' +
-                                          text.length.toString());
-                                    },
-                                    onSubmitted: (text) {
-                                      print('submit $text');
-                                      FocusScope.of(context)
-                                          .requestFocus(FocusNode());
-                                    },
-                                  ))
-                            ],
-                          )),
-                        ),
+                              style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.normal,
+                                  color: ColorsUtil.hexColor(
+                                      0x7D7D7D)),
+                              //输入文本的样式
+                              onChanged: (text) {
+                                print('change $text' +
+                                    text.length.toString());
+                              },
+                              onSubmitted: (text) {
+                                print('submit $text');
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                              },
+                            )
+                        )
                       ),
                       GestureDetector(
                         onTap: () {
@@ -319,7 +309,7 @@ class RegisterPageState extends State<RegisterPage>
                                                 return AlertDialog(
                                                   content: Container(
                                                     width: double.infinity,
-                                                    height: 20.h,
+                                                    height: 39.h,
                                                     child: AliyunCaptchaButton(
                                                       controller:
                                                           _captchaController,
@@ -380,12 +370,13 @@ class RegisterPageState extends State<RegisterPage>
                                     }
                                   : null,
                               child: Container(
-                                height: 15.h,
+                                width: 100.w,
+                                height: 35.h,
+                                margin: EdgeInsets.only(top: 10.h,right: 24.w),
                                 alignment: Alignment.center,
-                                margin: EdgeInsets.only(bottom: 6.h),
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.r),
-                                    color: Colors.deepOrange),
+                                    borderRadius: BorderRadius.circular(20.r),
+                                    color: ColorsUtil.hexColor(0xAB7F3C)),
                                 child: Text(
                                   model.isNotClicked
                                       ? '获取验证码' //未点击过的初始状态
@@ -395,270 +386,14 @@ class RegisterPageState extends State<RegisterPage>
                                               "秒后重发",
                                   //过程中
                                   style: TextStyle(
-                                      color: Colors.black,
+                                      color: ColorsUtil.hexColor(0x533708),
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 5.sp),
+                                      fontSize: 15.sp),
                                 ),
                               )),
                         ),
                       ),
                     ],
-                  ),
-                ],
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 18.w, right: 19.w),
-                height: 23.h,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          child: Icon(Icons.lock),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5.h, bottom: 6.5.h),
-                          child: Row(
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Row(
-                                        children: <Widget>[
-                                          Text("设置密码",
-                                              style: TextStyle(
-                                                  fontSize: 8.5.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: ColorsUtil.hexColor(
-                                                      0x333333))),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.only(
-                          left: 8.w, right: 8.w, top: 5.h, bottom: 7.5.h),
-                      // width: 100.w,
-                      // height: 16.h,
-                      decoration: new BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10.w)),
-                          border: Border.all(
-                            color: ColorsUtil.hexColor(0xF2F2F2),
-                            width: 1.w,
-                            style: BorderStyle.solid,
-                          ),
-                          color: ColorsUtil.hexColor(0xF2F2F2)),
-                      child: Center(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                              // margin: EdgeInsets.only(left: 5.w, top: 5.h),
-                              height: 16.h,
-                              width: 72.w,
-                              child: TextField(
-                                controller: mima,
-                                cursorColor: ColorsUtil.hexColor(0x9F9F9F),
-                                //设置光标
-                                decoration: InputDecoration(
-//                        contentPadding: const EdgeInsets.symmetric(vertical: 9.8),
-                                    border: InputBorder.none,
-                                    hintText: "请输入密码",
-                                    hintStyle: new TextStyle(
-                                        fontSize: 6.sp,
-                                        fontWeight: FontWeight.normal,
-                                        color: ColorsUtil.hexColor(0x9F9F9F))),
-                                maxLines: 1,
-                                // maxLength: 10,
-                                //最大行数
-                                autofocus: false,
-                                //是否自动对焦
-                                obscureText: false,
-                                enabled: true,
-                                //是否是密码
-//                  textAlign: TextAlign.center,//文本对齐方式
-                                style: TextStyle(
-                                    fontSize: 6.sp,
-                                    fontWeight: FontWeight.normal,
-                                    color: ColorsUtil.hexColor(0x2F2F2F)),
-                                //输入文本的样式
-                                onChanged: (text) {
-                                  print(
-                                      'change $text' + text.length.toString());
-                                },
-                                onSubmitted: (text) {
-                                  print('submit $text');
-                                  FocusScope.of(context)
-                                      .requestFocus(FocusNode());
-                                },
-                              )),
-                          GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  passwordVisible = !passwordVisible;
-                                });
-                              },
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: 6.h),
-                                child: Image.asset(
-                                  "assets/login_passeye.png",
-                                  width: 9.w,
-                                  height: 6.59.h,
-                                  fit: BoxFit.fill,
-                                  color: !passwordVisible
-                                      ? Colors.grey
-                                      : ColorsUtil.hexColor(0xFD4049),
-                                ),
-                              )),
-                        ],
-                      )),
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 18.w, right: 19.w),
-                height: 23.h,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          child: Icon(Icons.lock),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5.h, bottom: 6.5.h),
-                          child: Row(
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Row(
-                                        children: <Widget>[
-                                          Text("确认密码",
-                                              style: TextStyle(
-                                                  fontSize: 8.5.sp,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: ColorsUtil.hexColor(
-                                                      0x333333))),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.only(
-                          left: 8.w, right: 8.w, top: 5.h, bottom: 7.5.h),
-                      // width: 100.w,
-                      // height: 16.h,
-                      decoration: new BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10.w)),
-                          border: Border.all(
-                            color: ColorsUtil.hexColor(0xF2F2F2),
-                            width: 1.w,
-                            style: BorderStyle.solid,
-                          ),
-                          color: ColorsUtil.hexColor(0xF2F2F2)),
-                      child: Center(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                              // margin: EdgeInsets.only(left: 5.w, top: 5.h),
-                              height: 16.h,
-                              width: 72.w,
-                              child: TextField(
-                                controller: remima,
-                                cursorColor: ColorsUtil.hexColor(0x9F9F9F),
-                                //设置光标
-                                decoration: InputDecoration(
-//                        contentPadding: const EdgeInsets.symmetric(vertical: 9.8),
-                                    border: InputBorder.none,
-                                    hintText: "请再次输入密码",
-                                    hintStyle: new TextStyle(
-                                        fontSize: 6.sp,
-                                        fontWeight: FontWeight.normal,
-                                        color: ColorsUtil.hexColor(0x9F9F9F))),
-                                maxLines: 1,
-                                // maxLength: 10,
-                                //最大行数
-                                autofocus: false,
-                                //是否自动对焦
-                                obscureText: false,
-                                enabled: true,
-                                //是否是密码
-//                  textAlign: TextAlign.center,//文本对齐方式
-                                style: TextStyle(
-                                    fontSize: 6.sp,
-                                    fontWeight: FontWeight.normal,
-                                    color: ColorsUtil.hexColor(0x2F2F2F)),
-                                //输入文本的样式
-                                onChanged: (text) {
-                                  print(
-                                      'change $text' + text.length.toString());
-                                },
-                                onSubmitted: (text) {
-                                  print('submit $text');
-                                  FocusScope.of(context)
-                                      .requestFocus(FocusNode());
-                                },
-                              )),
-                          GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  passwordVisible = !passwordVisible;
-                                });
-                              },
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: 6.h),
-                                child: Image.asset(
-                                  "assets/login_passeye.png",
-                                  width: 9.w,
-                                  height: 6.59.h,
-                                  fit: BoxFit.fill,
-                                  color: !passwordVisible
-                                      ? Colors.grey
-                                      : ColorsUtil.hexColor(0xFD4049),
-                                ),
-                              )),
-                        ],
-                      )),
-                    ),
                   ),
                 ],
               ),
@@ -667,108 +402,319 @@ class RegisterPageState extends State<RegisterPage>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+                      margin: EdgeInsets.only(
+                        left: 25.w,
+                        top: 21.h,
+                      ),
+                      child: Row(
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                child: Icon(Icons.lock,color: ColorsUtil.hexColor(0xB5B5B5),),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 5.w),
+                                child: Text("设置密码",
+                                    style: TextStyle(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: ColorsUtil.hexColor(0xB5B5B5))),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(
+                        left: 25.w, right: 25.w, top: 12.h,),
+                      padding: EdgeInsets.only(left: 25.w,right: 18.w),
+                      // width: 100.w,
+                      // height: 16.h,
+                      decoration: new BoxDecoration(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(25.w)),
+                          // border: Border.all(
+                          //   color: ColorsUtil.hexColor(0xF2F2F2),
+                          //   width: 1.w,
+                          //   style: BorderStyle.solid,
+                          // ),
+                          color: ColorsUtil.hexColor(0xffffff,alpha: 0.1)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(child: TextField(
+                            controller: mima,
+                            cursorColor:
+                            ColorsUtil.hexColor(0x9F9F9F),
+                            //设置光标
+                            decoration: InputDecoration(
+//                        contentPadding: const EdgeInsets.symmetric(vertical: 9.8),
+                                border: InputBorder.none,
+                                hintText: "请输入密码",
+                                hintStyle: new TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.normal,
+                                    color: ColorsUtil.hexColor(
+                                        0x7D7D7D))),
+                            maxLines: 1,
+                            // maxLength: 10,
+                            //最大行数
+                            autofocus: false,
+                            //是否自动对焦
+                            obscureText: !passwordVisible,
+                            enabled: true,
+                            //是否是密码
+//                  textAlign: TextAlign.center,//文本对齐方式
+                            style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.normal,
+                                color: ColorsUtil.hexColor(
+                                    0x7D7D7D)),
+                            //输入文本的样式
+                            onChanged: (text) {
+                              print('change $text' +
+                                  text.length.toString());
+                            },
+                            onSubmitted: (text) {
+                              print('submit $text');
+                              FocusScope.of(context)
+                                  .requestFocus(FocusNode());
+                            },
+                          )),
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  passwordVisible = !passwordVisible;
+                                });
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 0.h),
+                                child: Image.asset(
+                                  "assets/login_passeye.png",
+                                  height: 25.w,
+                                  fit: BoxFit.fitHeight,
+                                  color: !passwordVisible
+                                      ? Colors.grey
+                                      : ColorsUtil.hexColor(0xffffff),
+                                ),
+                              )),
+                        ],
+                      )
+                  )
+                ],
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      margin: EdgeInsets.only(
+                        left: 25.w,
+                        top: 21.h,
+                      ),
+                      child: Row(
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                child: Icon(Icons.lock,color: ColorsUtil.hexColor(0xB5B5B5),),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 5.w),
+                                child: Text("设置密码",
+                                    style: TextStyle(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: ColorsUtil.hexColor(0xB5B5B5))),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(
+                        left: 25.w, right: 25.w, top: 12.h,),
+                      padding: EdgeInsets.only(left: 25.w,right: 18.w),
+                      // width: 100.w,
+                      // height: 16.h,
+                      decoration: new BoxDecoration(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(25.w)),
+                          // border: Border.all(
+                          //   color: ColorsUtil.hexColor(0xF2F2F2),
+                          //   width: 1.w,
+                          //   style: BorderStyle.solid,
+                          // ),
+                          color: ColorsUtil.hexColor(0xffffff,alpha: 0.1)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(child: TextField(
+                            controller: remima,
+                            cursorColor:
+                            ColorsUtil.hexColor(0x9F9F9F),
+                            //设置光标
+                            decoration: InputDecoration(
+//                        contentPadding: const EdgeInsets.symmetric(vertical: 9.8),
+                                border: InputBorder.none,
+                                hintText: "请输入密码",
+                                hintStyle: new TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.normal,
+                                    color: ColorsUtil.hexColor(
+                                        0x7D7D7D))),
+                            maxLines: 1,
+                            // maxLength: 10,
+                            //最大行数
+                            autofocus: false,
+                            //是否自动对焦
+                            obscureText: !passwordVisible,
+                            enabled: true,
+                            //是否是密码
+//                  textAlign: TextAlign.center,//文本对齐方式
+                            style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.normal,
+                                color: ColorsUtil.hexColor(
+                                    0x7D7D7D)),
+                            //输入文本的样式
+                            onChanged: (text) {
+                              print('change $text' +
+                                  text.length.toString());
+                            },
+                            onSubmitted: (text) {
+                              print('submit $text');
+                              FocusScope.of(context)
+                                  .requestFocus(FocusNode());
+                            },
+                          )),
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  passwordVisible = !passwordVisible;
+                                });
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 0.h),
+                                child: Image.asset(
+                                  "assets/login_passeye.png",
+                                  height: 25.w,
+                                  fit: BoxFit.fitHeight,
+                                  color: !passwordVisible
+                                      ? Colors.grey
+                                      : ColorsUtil.hexColor(0xffffff),
+                                ),
+                              )),
+                        ],
+                      )
+                  ),
+                  Container(
                     margin: EdgeInsets.only(
-                      left: 18.w,
-                      right: 19.w,
+                      left: 25.w,
+                      top: 13.h,
+                    ),
+                    child: Text("*限6-20个字符以内，建议使用数字字母组合，区分大小写",style: TextStyle(fontSize: 12.sp,color: ColorsUtil.hexColor(0x7D7D7D)),),
+                  )
+                ],
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(
+                      left: 25.w,
+                      top: 21.h,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
-                          child: Icon(Icons.person),
+                          child: Icon(Icons.email,color: ColorsUtil.hexColor(0xB5B5B5),),
                         ),
                         Container(
-                          margin: EdgeInsets.only(bottom: 0.h),
+                          margin: EdgeInsets.only(left: 5.w),
                           child: Text("邀请码",
                               style: TextStyle(
-                                  fontSize: 8.5.sp,
+                                  fontSize: 15.sp,
                                   fontWeight: FontWeight.bold,
-                                  color: ColorsUtil.hexColor(0x333333))),
+                                  color: ColorsUtil.hexColor(0xB5B5B5))),
                         ),
                       ],
                     ),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              left: 8.w, right: 8.w, top: 5.h, bottom: 7.5.h),
-                          // width: 100.w,
-                          // height: 16.h,
-                          decoration: new BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.w)),
-                              border: Border.all(
-                                color: ColorsUtil.hexColor(0xF2F2F2),
-                                width: 1.w,
-                                style: BorderStyle.solid,
-                              ),
-                              color: ColorsUtil.hexColor(0xF2F2F2)),
-                          child: Center(
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                  // margin: EdgeInsets.only(left: 5.w, top: 5.h),
-                                  height: 16.h,
-                                  width: 72.w,
-                                  child: TextField(
-                                    controller: yaoqingma,
-                                    cursorColor: ColorsUtil.hexColor(0x9F9F9F),
-                                    //设置光标
-                                    decoration: InputDecoration(
+                  Container(
+                      margin: EdgeInsets.only(
+                        left: 25.w, right: 25.w, top: 12.h,),
+                      padding: EdgeInsets.only(left: 25.w),
+                      // width: 100.w,
+                      // height: 16.h,
+                      decoration: new BoxDecoration(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(25.w)),
+                          // border: Border.all(
+                          //   color: ColorsUtil.hexColor(0xF2F2F2),
+                          //   width: 1.w,
+                          //   style: BorderStyle.solid,
+                          // ),
+                          color: ColorsUtil.hexColor(0xffffff,alpha: 0.1)),
+                      child: TextField(
+                        controller: yaoqingma,
+                        cursorColor:
+                        ColorsUtil.hexColor(0x9F9F9F),
+                        //设置光标
+                        decoration: InputDecoration(
 //                        contentPadding: const EdgeInsets.symmetric(vertical: 9.8),
-                                        border: InputBorder.none,
-                                        hintText: "请输入邀请码（可选）",
-                                        hintStyle: new TextStyle(
-                                            fontSize: 6.sp,
-                                            fontWeight: FontWeight.normal,
-                                            color:
-                                                ColorsUtil.hexColor(0x9F9F9F))),
-                                    maxLines: 1,
-                                    // maxLength: 10,
-                                    //最大行数
-                                    autofocus: false,
-                                    //是否自动对焦
-                                    obscureText: false,
-                                    enabled: true,
-                                    //是否是密码
+                            border: InputBorder.none,
+                            hintText: "请输入邀请码（选填）",
+                            hintStyle: new TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.normal,
+                                color: ColorsUtil.hexColor(
+                                    0x7D7D7D))),
+                        maxLines: 1,
+                        // maxLength: 10,
+                        //最大行数
+                        autofocus: false,
+                        //是否自动对焦
+                        obscureText: false,
+                        enabled: true,
+                        //是否是密码
 //                  textAlign: TextAlign.center,//文本对齐方式
-                                    style: TextStyle(
-                                        fontSize: 6.sp,
-                                        fontWeight: FontWeight.normal,
-                                        color: ColorsUtil.hexColor(0x2F2F2F)),
-                                    //输入文本的样式
-                                    onChanged: (text) {
-                                      print('change $text' +
-                                          text.length.toString());
-                                    },
-                                    onSubmitted: (text) {
-                                      print('submit $text');
-                                      FocusScope.of(context)
-                                          .requestFocus(FocusNode());
-                                    },
-                                  ))
-                            ],
-                          )),
-                        ),
-                      ),
-                    ],
-                  ),
+                        style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.normal,
+                            color: ColorsUtil.hexColor(
+                                0x7D7D7D)),
+                        //输入文本的样式
+                        onChanged: (text) {
+                          print('change $text' +
+                              text.length.toString());
+                        },
+                        onSubmitted: (text) {
+                          print('submit $text');
+                          FocusScope.of(context)
+                              .requestFocus(FocusNode());
+                        },
+                      )
+                  )
                 ],
               ),
               Container(
 //              margin: EdgeInsets.only(top: ScreenUtil().setWidth(50)),
                 margin: EdgeInsets.only(
-                    top: ScreenUtil().setWidth(0),
-                    left: ScreenUtil().setWidth(16.5),
-                    right: ScreenUtil().setWidth(18),
-                    bottom: 5.h),
+                    top: ScreenUtil().setWidth(42),
+                    left: ScreenUtil().setWidth(25),
+                    right: ScreenUtil().setWidth(25),
+                    bottom: 15.h),
 
-                width: ScreenUtil().setWidth(153),
-                height: ScreenUtil().setHeight(19),
+                width: ScreenUtil().setWidth(327),
+                height: ScreenUtil().setHeight(49),
                 child: MaterialButton(
                   onPressed: () async {
                     if (!xieyi) {
@@ -827,41 +773,39 @@ class RegisterPageState extends State<RegisterPage>
                     }
                   },
                   child: Container(
-                      width: 30.w,
-                      height: 15.h,
                       child: Center(
                         child: Text("注册",
                             style: TextStyle(
-                                fontSize: 8.sp,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white)),
                       )),
                   color: ((shoujihao.text.length > 0) &&
                           (yazhengma.text.length > 0))
-                      ? Colors.grey
+                      ? ColorsUtil.hexColor(0xB48C50)
                       : Colors.grey,
                   textColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: Colors.white,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(10)),
+                      // side: BorderSide(
+                      //   color: Colors.white,
+                      //   width: 1,
+                      // ),
+                      borderRadius: BorderRadius.circular(30)),
                 ),
               ),
               Container(
-                alignment: Alignment.bottomCenter,
-                // margin: EdgeInsets.only(top: 30.h),
+                margin: EdgeInsets.only(bottom: 67.h),
                 width: ScreenUtil().screenWidth,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     InkWell(
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
                       child: Container(
-                        margin: EdgeInsets.only(right: 3.w, bottom: 25.h),
+                        margin: EdgeInsets.only(right: 3.w,top: 3.h),
                         // padding: EdgeInsets.only(top: ScreenUtil().setWidth(12)),
-                        width: 6.5.w,
-                        height: 6.5.h,
+                        width: 16.w,
                         child: !xieyi
                             ? Image.asset(
                                 "assets/login_xieyi.png",
@@ -873,7 +817,7 @@ class RegisterPageState extends State<RegisterPage>
                                 "assets/login_xieyi_ok.png",
                                 // width: 24.w,
                                 // height: 24.w,
-                                fit: BoxFit.fill,
+                                fit: BoxFit.fitWidth,
                               ),
                       ),
                       onTap: () {
@@ -883,19 +827,16 @@ class RegisterPageState extends State<RegisterPage>
                       },
                     ),
                     Container(
-//              padding: EdgeInsets.only(top: ScreenUtil().setWidth(50)),
-                      margin: EdgeInsets.only(top: 0.h, bottom: 25.h),
-
                       child: RichText(
                         text: TextSpan(
                           text: '点击登录则代表您已经同意',
-                          style: TextStyle(color: Colors.black, fontSize: 6.sp),
+                          style: TextStyle(color: ColorsUtil.hexColor(0x9F9F9F), fontSize: 12.sp),
                           children: <TextSpan>[
                             TextSpan(
                                 text: ' 用户协议 ',
                                 style: TextStyle(
-                                    color: ColorsUtil.hexColor(0x4A8BF9),
-                                    fontSize: 6.sp),
+                                    color: ColorsUtil.hexColor(0xC5A57A),
+                                    fontSize: 12.sp),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () async {
                                     Navigator.push(
@@ -910,13 +851,13 @@ class RegisterPageState extends State<RegisterPage>
                             TextSpan(
                               text: '和',
                               style: TextStyle(
-                                  color: Colors.black, fontSize: 6.sp),
+                                  color: ColorsUtil.hexColor(0x9F9F9F), fontSize: 12.sp),
                             ),
                             TextSpan(
                                 text: ' 隐私政策',
                                 style: TextStyle(
-                                    color: ColorsUtil.hexColor(0x4A8BF9),
-                                    fontSize: 6.sp),
+                                    color: ColorsUtil.hexColor(0xC5A57A),
+                                    fontSize: 12.sp),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () async {
                                     Navigator.push(

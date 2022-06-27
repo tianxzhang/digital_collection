@@ -190,7 +190,7 @@ class HomePageState extends State<HomePage>
                             },
                                 childCount: productionListEntity
                                     .data!.products!.length),
-                            itemExtent: 230.h)
+                            itemExtent: 450.h)
                       ],
                     ),
                   ),

@@ -49,51 +49,44 @@ class BaseTabBarState extends State<BaseTabBar>
           type: BottomNavigationBarType.fixed,
           items: [
             BottomNavigationBarItem(
-              //一
               icon: Container(
-                width: 11.w,
-                height: 9.h,
+                width: 25.w,
                 decoration: new BoxDecoration(),
                 // child: Image.asset("assets/***.png"),
-                child: Icon(Icons.home),
+                child: Icon(Icons.home,color: ColorsUtil.hexColor(0xB5B5B5),),
               ),
               activeIcon: Container(
-                  width: 11.w,
-                  height: 9.h,
+                  width: 25.w,
                   decoration: new BoxDecoration(),
-                  child: Icon(Icons.home)),
-
+                  child: Icon(Icons.home,color: ColorsUtil.hexColor(0xF7BD50),)),
               title: Text('首页',
                   style: TextStyle(
                       color: currentIndex != 0
-                          ? ColorsUtil.hexColor(0x999999)
-                          : ColorsUtil.hexColor(0x333333),
+                          ? ColorsUtil.hexColor(0xB5B5B5)
+                          : ColorsUtil.hexColor(0xF7BD50),
                       fontWeight: currentIndex != 0
                           ? FontWeight.normal
                           : FontWeight.bold,
-                      fontSize: 5.sp)),
+                      fontSize: 10.sp)),
             ),
             BottomNavigationBarItem(
-              //一
               icon: Container(
-                  width: 11.w,
-                  height: 9.h,
+                  width: 25.w,
                   decoration: new BoxDecoration(),
-                  child: Icon(Icons.person)),
+                  child: Icon(Icons.person,color: ColorsUtil.hexColor(0xB5B5B5))),
               activeIcon: Container(
-                  width: 11.w,
-                  height: 9.h,
+                  width: 25.w,
                   decoration: new BoxDecoration(),
-                  child: Icon(Icons.person)),
+                  child: Icon(Icons.person,color: ColorsUtil.hexColor(0xF7BD50))),
               title: Text('我的',
                   style: TextStyle(
                       color: currentIndex != 1
-                          ? ColorsUtil.hexColor(0x999999)
-                          : ColorsUtil.hexColor(0x333333),
+                          ? ColorsUtil.hexColor(0xB5B5B5)
+                          : ColorsUtil.hexColor(0xF7BD50),
                       fontWeight: currentIndex != 1
                           ? FontWeight.normal
                           : FontWeight.bold,
-                      fontSize: 5.sp)),
+                      fontSize: 10.sp)),
             ),
           ],
           onTap: (index) {
