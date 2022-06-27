@@ -48,6 +48,7 @@ class BaseTabBarState extends State<BaseTabBar>
         child: BottomNavigationBar(
           currentIndex: currentIndex,
           type: BottomNavigationBarType.fixed,
+          backgroundColor: ColorsUtil.hexColor(0x101010),
           items: [
             BottomNavigationBarItem(
               icon: Container(

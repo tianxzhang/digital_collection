@@ -90,24 +90,49 @@ class MyPageState extends State<MyPage>
           case ConnectionState.done:
             return SafeArea(
                 child: Container(
+                  margin: EdgeInsets.all(15.w),
               child: CustomScrollView(
                 slivers: [
                   SliverToBoxAdapter(
                     child: Container(
-                      height: 60.h,
-                      color: Colors.grey,
+                      height: 70.h,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Container(
-                                child: Image.asset(
-                                  "assets/start_page.png",
-                                  height: 20.h,
-                                  width: 30.w,
+                                width: 67.w,
+                                height: 67.w,
+                                child: CachedNetworkImage(
                                   fit: BoxFit.fill,
+                                  httpHeaders: const {
+                                    'referer': 'http://app.xuanmengge.com'
+                                  },
+                                  placeholder: (context, url) => Container(
+                                    child: Center(
+                                      child: CupertinoActivityIndicator(),
+                                    ),
+                                  ),
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          // borderRadius:
+                                          // BorderRadius.circular(
+                                          //     5.r),
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                      ),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
+                                  imageUrl:
+                                  "${userInfoEntity.data?.photo}",
                                 ),
                               ),
                               if (!isLogin) ...[
@@ -127,13 +152,23 @@ class MyPageState extends State<MyPage>
                                     Container(
                                       child: Text(
                                         userInfoEntity.data?.nickName ?? "",
-                                        style: TextStyle(color: Colors.black),
+                                        style: TextStyle(fontSize: 18.sp,
+                                            color: ColorsUtil.hexColor(0xffffff),
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                     Container(
+                                      height: 21.h,
+                                      decoration: BoxDecoration(color: ColorsUtil.hexColor(0x343635),borderRadius: BorderRadius.circular(30)),
+                                      constraints: BoxConstraints(maxWidth: 169.w),
+                                      margin: EdgeInsets.only(top: 20.h),
+                                      padding: EdgeInsets.only(left: 7.5.w),
+                                      alignment: Alignment.center,
                                       child: Text(
                                         userInfoEntity.data?.address ?? "",
-                                        style: TextStyle(color: Colors.black),
+                                        style: TextStyle(fontSize: 12.sp,
+                                            color: ColorsUtil.hexColor(0xECBA52),
+                                            fontWeight: FontWeight.bold),
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
@@ -144,7 +179,7 @@ class MyPageState extends State<MyPage>
                           ),
                           Container(
                             alignment: Alignment.center,
-                            child: Icon(Icons.arrow_forward_ios),
+                            child: Icon(Icons.arrow_forward_ios,color: ColorsUtil.hexColor(0xB5B5B5),),
                           )
                         ],
                       ),
@@ -152,7 +187,10 @@ class MyPageState extends State<MyPage>
                   ),
                   SliverToBoxAdapter(
                     child: Container(
+                      height: 165.h,
+                      decoration: BoxDecoration(color: ColorsUtil.hexColor(0x101010),borderRadius: BorderRadius.circular(20)),
                       margin: EdgeInsets.only(top: 10.h),
+                      padding: EdgeInsets.all(15.w),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -164,16 +202,17 @@ class MyPageState extends State<MyPage>
                                   child: Column(
                                     children: [
                                       Container(
-                                        child: Icon(Icons.person),
+                                        width: 40.w,
+                                        height: 40.w,
+                                        child: Image.asset("assets/1.png"),
                                       ),
                                       Container(
-                                        margin: EdgeInsets.only(top: 3.h),
                                         child: Text(
                                           "我的订单",
                                           style: TextStyle(
                                             color:
-                                                ColorsUtil.hexColor(0x333333),
-                                            fontSize: 6.sp,
+                                                ColorsUtil.hexColor(0xB5B5B5 ),
+                                            fontSize: 14.sp,
                                           ),
                                         ),
                                       ),
@@ -190,7 +229,9 @@ class MyPageState extends State<MyPage>
                                   child: Column(
                                     children: [
                                       Container(
-                                        child: Icon(Icons.credit_card_rounded),
+                                        width: 40.w,
+                                        height: 40.w,
+                                        child: Image.asset("assets/2.png"),
                                       ),
                                       Container(
                                         margin: EdgeInsets.only(top: 3.h),
@@ -198,8 +239,8 @@ class MyPageState extends State<MyPage>
                                           "转赠记录",
                                           style: TextStyle(
                                             color:
-                                                ColorsUtil.hexColor(0x333333),
-                                            fontSize: 6.sp,
+                                            ColorsUtil.hexColor(0xB5B5B5 ),
+                                            fontSize: 14.sp,
                                           ),
                                         ),
                                       ),
@@ -213,7 +254,9 @@ class MyPageState extends State<MyPage>
                                   child: Column(
                                     children: [
                                       Container(
-                                        child: Icon(Icons.share),
+                                        width: 40.w,
+                                        height: 40.w,
+                                        child: Image.asset("assets/3.png"),
                                       ),
                                       Container(
                                         margin: EdgeInsets.only(top: 3.h),
@@ -221,8 +264,8 @@ class MyPageState extends State<MyPage>
                                           "分享",
                                           style: TextStyle(
                                             color:
-                                                ColorsUtil.hexColor(0x333333),
-                                            fontSize: 6.sp,
+                                            ColorsUtil.hexColor(0xB5B5B5 ),
+                                            fontSize: 14.sp,
                                           ),
                                         ),
                                       ),
@@ -238,7 +281,9 @@ class MyPageState extends State<MyPage>
                                   child: Column(
                                     children: [
                                       Container(
-                                        child: Icon(Icons.settings),
+                                        width: 40.w,
+                                        height: 40.w,
+                                        child: Image.asset("assets/4.png"),
                                       ),
                                       Container(
                                         margin: EdgeInsets.only(top: 3.h),
@@ -246,8 +291,8 @@ class MyPageState extends State<MyPage>
                                           "设置",
                                           style: TextStyle(
                                             color:
-                                                ColorsUtil.hexColor(0x333333),
-                                            fontSize: 6.sp,
+                                            ColorsUtil.hexColor(0xB5B5B5 ),
+                                            fontSize: 14.sp,
                                           ),
                                         ),
                                       ),
@@ -262,7 +307,7 @@ class MyPageState extends State<MyPage>
                             ],
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 10.h),
+                            margin: EdgeInsets.only(top: 20.h),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -271,8 +316,9 @@ class MyPageState extends State<MyPage>
                                     child: Column(
                                       children: [
                                         Container(
-                                          child: Icon(
-                                              Icons.drive_file_rename_outline),
+                                          width: 40.w,
+                                          height: 40.w,
+                                          child: Image.asset("assets/5.png"),
                                         ),
                                         Container(
                                           margin: EdgeInsets.only(top: 3.h),
@@ -280,8 +326,8 @@ class MyPageState extends State<MyPage>
                                             "实名认证",
                                             style: TextStyle(
                                               color:
-                                                  ColorsUtil.hexColor(0x333333),
-                                              fontSize: 6.sp,
+                                              ColorsUtil.hexColor(0xB5B5B5 ),
+                                              fontSize: 14.sp,
                                             ),
                                           ),
                                         ),
@@ -290,69 +336,43 @@ class MyPageState extends State<MyPage>
                                   ),
                                   onTap: () async {},
                                 ),
-                                GestureDetector(
-                                  child: Container(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: 20.w,
-                                          margin: EdgeInsets.only(top: 3.h),
-                                          child: Text(
-                                            "",
-                                            style: TextStyle(
-                                              color:
-                                                  ColorsUtil.hexColor(0x333333),
-                                              fontSize: 6.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                Container(
+                                  width: 45.w,
+                                  margin: EdgeInsets.only(top: 3.h),
+                                  child: Text(
+                                    "",
+                                    style: TextStyle(
+                                      color:
+                                      ColorsUtil.hexColor(0x333333),
+                                      fontSize: 6.sp,
                                     ),
                                   ),
-                                  onTap: () async {},
                                 ),
-                                GestureDetector(
-                                  child: Container(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: 20.w,
-                                          margin: EdgeInsets.only(top: 3.h),
-                                          child: Text(
-                                            "",
-                                            style: TextStyle(
-                                              color:
-                                                  ColorsUtil.hexColor(0x333333),
-                                              fontSize: 6.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                Container(
+                                  width: 45.w,
+                                  margin: EdgeInsets.only(top: 3.h),
+                                  child: Text(
+                                    "",
+                                    style: TextStyle(
+                                      color:
+                                      ColorsUtil.hexColor(0x333333),
+                                      fontSize: 6.sp,
                                     ),
                                   ),
-                                  onTap: () async {},
                                 ),
-                                GestureDetector(
-                                  child: Container(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: 20.w,
-                                          margin: EdgeInsets.only(top: 3.h),
-                                          child: Text(
-                                            "",
-                                            style: TextStyle(
-                                              color:
-                                                  ColorsUtil.hexColor(0x333333),
-                                              fontSize: 6.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                Container(
+                                  width: 45.w,
+                                  margin: EdgeInsets.only(top: 3.h),
+                                  child: Text(
+                                    "",
+                                    style: TextStyle(
+                                      color:
+                                      ColorsUtil.hexColor(0x333333),
+                                      fontSize: 6.sp,
                                     ),
                                   ),
-                                  onTap: () async {},
                                 ),
+
                               ],
                             ),
                           )
@@ -361,13 +381,28 @@ class MyPageState extends State<MyPage>
                     ),
                   ),
                   SliverToBoxAdapter(
-                    child: Container(
-                      margin: EdgeInsets.only(top: 20.h),
-                      child: Text(
-                        "我的收藏",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 20.h),
+                          child: Text(
+                            "我的收藏: ",
+                            style: TextStyle(color:
+                            ColorsUtil.hexColor(0xB5B5B5),
+                              fontSize: 14.sp,),
+                          ),
+                        ),
+                        Container(
+                            margin: EdgeInsets.only(top: 20.h),
+                          child: Text(
+                            "${collectionEntity.data?.list?.length??0}",
+                            style: TextStyle(color:
+                            ColorsUtil.hexColor(0xffffff),
+                              fontSize: 14.sp,fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      ],
+                    )
                   ),
                   SliverToBoxAdapter(
                     child: GridView.builder(
@@ -377,18 +412,17 @@ class MyPageState extends State<MyPage>
                           crossAxisCount: 2,
                           mainAxisSpacing: 10.h,
                           // crossAxisSpacing: 30.w,
-                          childAspectRatio: 1.35),
+                          // childAspectRatio: 1.35,
+                      ),
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(
                           child: Container(
                             child: Column(
                               children: [
                                 Container(
-                                    margin: EdgeInsets.only(right: 5.w),
-                                    width: 72.5.w,
-                                    height: 45.h,
+
                                     child: CachedNetworkImage(
-                                      fit: BoxFit.contain,
+                                      fit: BoxFit.fitWidth,
                                       httpHeaders: {
                                         'referer': 'http://app.xuanmengge.com'
                                       },
@@ -401,12 +435,14 @@ class MyPageState extends State<MyPage>
                                       ),
                                       imageBuilder: (context, imageProvider) =>
                                           Container(
+                                            width: 169.w,
+                                            height: 165.h,
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(5.r),
                                           image: DecorationImage(
                                             image: imageProvider,
-                                            fit: BoxFit.cover,
+                                            fit: BoxFit.fill,
                                           ),
                                         ),
                                       ),
@@ -425,23 +461,21 @@ class MyPageState extends State<MyPage>
                                         "",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: ColorsUtil.hexColor(0x333333),
-                                      fontSize: 6.sp,
+                                      color: ColorsUtil.hexColor(0xffffff),
+                                      fontSize: 15.sp,
                                     ),
                                   ),
                                 ),
                                 Container(
-                                  child: Text(
-                                    collectionEntity.data?.list
-                                            ?.elementAt(index)
-                                            .metaName ??
-                                        "",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: ColorsUtil.hexColor(0x333333),
-                                      fontSize: 6.sp,
-                                    ),
-                                  ),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 20.w,
+                                        height: 20.w,
+                                        child: Image.asset("assets/7.png"),
+                                      )
+                                    ],
+                                  )
                                 ),
                                 Container(
                                   child: Text(
@@ -450,9 +484,9 @@ class MyPageState extends State<MyPage>
                                             .supplierName ??
                                         "",
                                     style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: ColorsUtil.hexColor(0x333333),
-                                      fontSize: 6.sp,
+                                      fontWeight: FontWeight.normal,
+                                      color: ColorsUtil.hexColor(0x7D7D7D ),
+                                      fontSize: 12.sp,
                                     ),
                                   ),
                                 ),
