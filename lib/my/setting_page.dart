@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
 import 'model/user_info_entity.dart';
+import 'modify_password_page.dart';
 
 class SettingPage extends StatefulWidget {
   final UserInfoData userInfoData;
@@ -28,6 +29,8 @@ class SettingPageState extends State<SettingPage>
     with AutomaticKeepAliveClientMixin {
   var resultData;
   late SharedPreferences prefs;
+  bool setPass = false;
+
   @override
   bool get wantKeepAlive => true;
 
@@ -163,8 +166,13 @@ class SettingPageState extends State<SettingPage>
                               ),
                             ),
                             onTap: () {
-                              Navigator.push(
-                                  context, RouteUtil.createRoute(OperatePasswordPage()));
+                              if(!setPass) {
+                                Navigator.push(
+                                    context, RouteUtil.createRoute(ModifyPasswordPage()));
+                              } else {
+                                Navigator.push(
+                                    context, RouteUtil.createRoute(OperatePasswordPage()));
+                              }
                             },
                           )
                           ,
