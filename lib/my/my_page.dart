@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:digital_collection/login_register/login_page.dart';
 import 'package:digital_collection/my/collection_detail.dart';
 import 'package:digital_collection/my/model/collection_entity.dart';
+import 'package:digital_collection/my/present_record.dart';
 import 'package:digital_collection/my/setting_page.dart';
 import 'package:digital_collection/my/user_info_page.dart';
 import 'package:digital_collection/my/user_order_page.dart';
@@ -272,7 +273,11 @@ class MyPageState extends State<MyPage>
                                     ],
                                   ),
                                 ),
-                                onTap: () async {},
+                                onTap: () async {
+                                  Navigator.push(
+                                      context,
+                                      RouteUtil.createRoute(PresentRecordPage()));
+                                },
                               ),
                               GestureDetector(
                                 child: Container(

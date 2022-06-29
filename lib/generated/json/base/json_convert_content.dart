@@ -8,6 +8,8 @@ import 'package:digital_collection/home/model/product_detail_entity.dart';
 import 'package:digital_collection/home/model/production_list_entity.dart';
 import 'package:digital_collection/my/model/collection_detail_entity.dart';
 import 'package:digital_collection/my/model/collection_entity.dart';
+import 'package:digital_collection/my/model/present_detail_entity.dart';
+import 'package:digital_collection/my/model/present_record_entity.dart';
 import 'package:digital_collection/my/model/user_info_entity.dart';
 import 'package:digital_collection/my/model/user_order_detail_entity.dart';
 import 'package:digital_collection/my/model/user_order_entity.dart';
@@ -28,6 +30,11 @@ class JsonConvert {
 		(CollectionEntity).toString(): CollectionEntity.fromJson,
 		(CollectionData).toString(): CollectionData.fromJson,
 		(CollectionDataList).toString(): CollectionDataList.fromJson,
+		(PresentDetailEntity).toString(): PresentDetailEntity.fromJson,
+		(PresentDetailData).toString(): PresentDetailData.fromJson,
+		(PresentRecordEntity).toString(): PresentRecordEntity.fromJson,
+		(PresentRecordData).toString(): PresentRecordData.fromJson,
+		(PresentRecordDataList).toString(): PresentRecordDataList.fromJson,
 		(UserInfoEntity).toString(): UserInfoEntity.fromJson,
 		(UserInfoData).toString(): UserInfoData.fromJson,
 		(UserOrderDetailEntity).toString(): UserOrderDetailEntity.fromJson,
@@ -142,6 +149,21 @@ class JsonConvert {
 		}
 		if(<CollectionDataList>[] is M){
 			return data.map<CollectionDataList>((Map<String, dynamic> e) => CollectionDataList.fromJson(e)).toList() as M;
+		}
+		if(<PresentDetailEntity>[] is M){
+			return data.map<PresentDetailEntity>((Map<String, dynamic> e) => PresentDetailEntity.fromJson(e)).toList() as M;
+		}
+		if(<PresentDetailData>[] is M){
+			return data.map<PresentDetailData>((Map<String, dynamic> e) => PresentDetailData.fromJson(e)).toList() as M;
+		}
+		if(<PresentRecordEntity>[] is M){
+			return data.map<PresentRecordEntity>((Map<String, dynamic> e) => PresentRecordEntity.fromJson(e)).toList() as M;
+		}
+		if(<PresentRecordData>[] is M){
+			return data.map<PresentRecordData>((Map<String, dynamic> e) => PresentRecordData.fromJson(e)).toList() as M;
+		}
+		if(<PresentRecordDataList>[] is M){
+			return data.map<PresentRecordDataList>((Map<String, dynamic> e) => PresentRecordDataList.fromJson(e)).toList() as M;
 		}
 		if(<UserInfoEntity>[] is M){
 			return data.map<UserInfoEntity>((Map<String, dynamic> e) => UserInfoEntity.fromJson(e)).toList() as M;
