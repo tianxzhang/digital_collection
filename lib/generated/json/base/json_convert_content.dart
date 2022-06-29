@@ -9,6 +9,8 @@ import 'package:digital_collection/home/model/production_list_entity.dart';
 import 'package:digital_collection/my/model/collection_detail_entity.dart';
 import 'package:digital_collection/my/model/collection_entity.dart';
 import 'package:digital_collection/my/model/user_info_entity.dart';
+import 'package:digital_collection/my/model/user_order_detail_entity.dart';
+import 'package:digital_collection/my/model/user_order_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
 typedef JsonConvertFunction<T> = T Function(Map<String, dynamic> json);
@@ -28,6 +30,11 @@ class JsonConvert {
 		(CollectionDataList).toString(): CollectionDataList.fromJson,
 		(UserInfoEntity).toString(): UserInfoEntity.fromJson,
 		(UserInfoData).toString(): UserInfoData.fromJson,
+		(UserOrderDetailEntity).toString(): UserOrderDetailEntity.fromJson,
+		(UserOrderDetailData).toString(): UserOrderDetailData.fromJson,
+		(UserOrderEntity).toString(): UserOrderEntity.fromJson,
+		(UserOrderData).toString(): UserOrderData.fromJson,
+		(UserOrderDataList).toString(): UserOrderDataList.fromJson,
 	};
 
   T? convert<T>(dynamic value) {
@@ -141,6 +148,21 @@ class JsonConvert {
 		}
 		if(<UserInfoData>[] is M){
 			return data.map<UserInfoData>((Map<String, dynamic> e) => UserInfoData.fromJson(e)).toList() as M;
+		}
+		if(<UserOrderDetailEntity>[] is M){
+			return data.map<UserOrderDetailEntity>((Map<String, dynamic> e) => UserOrderDetailEntity.fromJson(e)).toList() as M;
+		}
+		if(<UserOrderDetailData>[] is M){
+			return data.map<UserOrderDetailData>((Map<String, dynamic> e) => UserOrderDetailData.fromJson(e)).toList() as M;
+		}
+		if(<UserOrderEntity>[] is M){
+			return data.map<UserOrderEntity>((Map<String, dynamic> e) => UserOrderEntity.fromJson(e)).toList() as M;
+		}
+		if(<UserOrderData>[] is M){
+			return data.map<UserOrderData>((Map<String, dynamic> e) => UserOrderData.fromJson(e)).toList() as M;
+		}
+		if(<UserOrderDataList>[] is M){
+			return data.map<UserOrderDataList>((Map<String, dynamic> e) => UserOrderDataList.fromJson(e)).toList() as M;
 		}
 
 		debugPrint("${M.toString()} not found");
