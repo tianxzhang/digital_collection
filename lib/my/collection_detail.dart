@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:date_format/date_format.dart';
+import 'package:digital_collection/my/present_page.dart';
 import 'package:digital_collection/util/color_util.dart';
+import 'package:digital_collection/util/route_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:digital_collection/my/model/collection_detail_entity.dart';
 import 'package:digital_collection/util/network_util.dart';
@@ -383,19 +385,25 @@ class CollectionDetailPageState extends State<CollectionDetailPage>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [Container(
-                          margin: EdgeInsets.only(right: 5.w),
-                          width: 25.w,
-                          height: 25.w,
-                          child: Image.asset("assets/22.png",fit: BoxFit.fill,),
-                        ), Text('转赠',style: TextStyle(
-                            fontSize: 14.sp,
-                            color: ColorsUtil.hexColor(0xB5B5B5 ),
-                            fontWeight: FontWeight.bold))],
+                    GestureDetector(
+                      child: Container(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [Container(
+                            margin: EdgeInsets.only(right: 5.w),
+                            width: 25.w,
+                            height: 25.w,
+                            child: Image.asset("assets/22.png",fit: BoxFit.fill,),
+                          ), Text('转赠',style: TextStyle(
+                              fontSize: 14.sp,
+                              color: ColorsUtil.hexColor(0xB5B5B5 ),
+                              fontWeight: FontWeight.bold))],
+                        ),
                       ),
+                      onTap: () {
+                        Navigator.push(
+                            context, RouteUtil.createRoute(PresentPage(widget.id)));
+                      },
                     ),
                     Container(
                       child: Row(

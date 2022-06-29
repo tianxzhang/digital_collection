@@ -9,6 +9,7 @@ import 'package:digital_collection/home/model/production_list_entity.dart';
 import 'package:digital_collection/my/model/collection_detail_entity.dart';
 import 'package:digital_collection/my/model/collection_entity.dart';
 import 'package:digital_collection/my/model/present_detail_entity.dart';
+import 'package:digital_collection/my/model/present_entity.dart';
 import 'package:digital_collection/my/model/present_record_entity.dart';
 import 'package:digital_collection/my/model/user_info_entity.dart';
 import 'package:digital_collection/my/model/user_order_detail_entity.dart';
@@ -32,6 +33,8 @@ class JsonConvert {
 		(CollectionDataList).toString(): CollectionDataList.fromJson,
 		(PresentDetailEntity).toString(): PresentDetailEntity.fromJson,
 		(PresentDetailData).toString(): PresentDetailData.fromJson,
+		(PresentEntity).toString(): PresentEntity.fromJson,
+		(PresentData).toString(): PresentData.fromJson,
 		(PresentRecordEntity).toString(): PresentRecordEntity.fromJson,
 		(PresentRecordData).toString(): PresentRecordData.fromJson,
 		(PresentRecordDataList).toString(): PresentRecordDataList.fromJson,
@@ -155,6 +158,12 @@ class JsonConvert {
 		}
 		if(<PresentDetailData>[] is M){
 			return data.map<PresentDetailData>((Map<String, dynamic> e) => PresentDetailData.fromJson(e)).toList() as M;
+		}
+		if(<PresentEntity>[] is M){
+			return data.map<PresentEntity>((Map<String, dynamic> e) => PresentEntity.fromJson(e)).toList() as M;
+		}
+		if(<PresentData>[] is M){
+			return data.map<PresentData>((Map<String, dynamic> e) => PresentData.fromJson(e)).toList() as M;
 		}
 		if(<PresentRecordEntity>[] is M){
 			return data.map<PresentRecordEntity>((Map<String, dynamic> e) => PresentRecordEntity.fromJson(e)).toList() as M;
